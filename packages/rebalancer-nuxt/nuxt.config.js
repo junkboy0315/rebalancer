@@ -24,17 +24,21 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: ['element-ui/lib/theme-chalk/index.css'],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/element-ui'],
 
   /*
   ** Nuxt.js modules
   */
-  modules: [],
+  modules: ['@nuxtjs/axios'],
+  /*
+  ** for yarn workspace
+  */
+  modulesDir: ['../../node_modules'],
   /*
   ** Axios module configuration
   */
