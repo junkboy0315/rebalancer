@@ -5,7 +5,7 @@
       <div class="container">
         <div class="navbar-brand">
           <!-- brand name -->
-          <nuxt-link to="portfolio" class="navbar-item">
+          <nuxt-link to="/portfolio" class="navbar-item">
             Portfolio Rebalancer
           </nuxt-link>
           <!-- humberger icon -->
@@ -18,10 +18,10 @@
         <div :class="{'is-active': isHumbergerOpen}" class="navbar-menu">
           <div class="navbar-end">
             <!-- menu items -->
-            <nuxt-link @click.native="closeHumberger" to="portfolio" class="navbar-item">
+            <nuxt-link @click.native="closeHumberger" to="/portfolio" class="navbar-item">
               Portfolio
             </nuxt-link>
-            <nuxt-link @click.native="closeHumberger" to="account" class="navbar-item">
+            <nuxt-link @click.native="closeHumberger" to="/account" class="navbar-item">
               Account
             </nuxt-link>
           </div>
@@ -29,7 +29,7 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container child-container">
       <nuxt />
     </div>
 
@@ -75,6 +75,15 @@ export default {
       color: #fff;
       height: 2px;
     }
+  }
+}
+
+.child-container {
+  padding: 50px 16px 0;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 }
 </style>
