@@ -1,5 +1,5 @@
 <template>
-  <section class="portfolio container">
+  <section class="portfolio">
     asdf
   </section>
 </template>
@@ -9,6 +9,4 @@ export default {};
 </script>
 
 <style lang="scss">
-.portfolio.container {
-}
 </style>

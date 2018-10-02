@@ -1,5 +1,5 @@
 <template>
-  <section class="home container">
+  <section class="home">
     <div>
       <h1 class="title has-text-white">
         Portfolio Rebalancer
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss">
-.home.container {
+.home {
   align-items: center;
   background-size: cover;
   background: url('~assets/top-background.jpg') no-repeat center center;
