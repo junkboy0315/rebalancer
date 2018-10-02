@@ -1,0 +1,21 @@
+{
+  "name": "rebalancer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^2.11.0"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "jest": "^23.6.0"
+  }
+}
