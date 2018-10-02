@@ -24,16 +24,12 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [
-    'normalize.css/normalize.css',
-    'element-ui/lib/theme-chalk/index.css',
-    '~assets/global.scss',
-  ],
+  css: ['~assets/global.scss'],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/element-ui'],
+  plugins: [],
 
   /*
   ** Nuxt.js modules

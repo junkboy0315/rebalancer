@@ -1,7 +1,14 @@
+@charset "utf-8";
+
+$family-sans-serif: '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体',
+  'YuGothic', 'メイリオ', Roboto, Arial, sans-serif;
+$body-background-color: #fafafa;
+$primary: #d84f00;
+
+@import 'bulma';
+
 html {
   font-size: 16px;
-  font-family: '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体',
-    'YuGothic', 'メイリオ', Roboto, Arial, sans-serif;
   box-sizing: border-box;
 }
 
