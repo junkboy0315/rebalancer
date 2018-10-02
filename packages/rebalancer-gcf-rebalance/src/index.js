@@ -1,5 +1,7 @@
-const uuid = require('uuid');
-const dataforge = require('./dataforge');
+import uuid from 'uuid';
+import Portfolio from './dataforge';
+
+// const dataforge = require('./dataforge');
 
 /**
  * HTTP Cloud Function.
@@ -11,6 +13,8 @@ const dataforge = require('./dataforge');
 const a = 1;
 const b = 1;
 
-exports.helloGET = (req, res) => {
+const helloGET = (req, res) => {
   res.send(uuid.v4());
 };
+
+export { helloGET };

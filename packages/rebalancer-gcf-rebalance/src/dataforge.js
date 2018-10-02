@@ -1,7 +1,6 @@
-const DataForge = require('data-forge');
-const DataFrame = DataForge.DataFrame;
+import { DataFrame } from 'data-forge';
 
-class Portfolio {
+export class Portfolio {
   /**
    *
    * @param {{id: number, amount: number, targetRate: number}} assets
@@ -183,5 +182,3 @@ class Portfolio {
     return result;
   }
 }
-
-module.exports = Portfolio;

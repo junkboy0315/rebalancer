@@ -2,9 +2,12 @@
   "name": "rebalancer-gcf-rebalance",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --out-dir dist --ignore **/__tests__/**",
+    "deploy:local": "yarn build && functions deploy helloGET --trigger-http",
+    "deploy": "yarn build && gcloud beta functions deploy helloGET --trigger-http",
+    "test": "jest"
   },
   "author": "",
   "license": "MIT",
