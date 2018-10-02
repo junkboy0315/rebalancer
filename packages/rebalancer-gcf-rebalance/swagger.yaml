@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  description: rebalanse asssets
+  version: 1.0.0
+  title: Rebalancer
+servers:
+  - url: 'https://us-central1-rebalancer-218123.cloudfunctions.net/'
+paths:
+  /rebalance:
+    post:
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Fail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      amount:
+                        type: integer
+                      targetRate:
+                        type: integer
+                adjust:
+                  type: integer
