@@ -1,3 +1,4 @@
+import cors from 'cors';
 import Rebalancer from './Rebalancer';
 
 // const dataforge = require('./dataforge');
@@ -10,16 +11,18 @@ import Rebalancer from './Rebalancer';
  */
 
 const rebalance = (req, res) => {
-  if (req.method !== 'POST') return res.sendStatus(404);
-  const { assets, adjust } = req.body;
+  cors()(req, res, () => {
+    if (req.method !== 'POST') return res.sendStatus(404);
+    const { assets, adjust } = req.body;
 
-  try {
-    const rebalancer = new Rebalancer(assets);
-    const result = rebalancer.rebalance(adjust);
-    res.send(result);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
+    try {
+      const rebalancer = new Rebalancer(assets);
+      const result = rebalancer.rebalance(adjust);
+      res.send(result);
+    } catch (err) {
+      res.status(400).send(err.message);
+    }
+  });
 };
 
 export { rebalance };

@@ -12,6 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.4",
     "data-forge": "^1.2.6",
     "uuid": "^3.3.2"
   }
