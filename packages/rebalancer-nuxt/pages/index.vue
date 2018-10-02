@@ -1,66 +1,67 @@
 <template>
-  <section class="container">
+  <section class="home container">
     <div>
-      <logo />
       <h1 class="title">
-        rebalancer-nuxt
+        Portfolio Rebalancer
       </h1>
       <h2 class="subtitle">
-        My amazing Nuxt.js project
-        <el-button @click="visible = true">Button</el-button>
+        <p>面倒なリバランスの計算を楽に行うためのツールです。</p>
+        <p>株式、投資信託、仮想通貨など、幅広くご利用いただけます。</p>
       </h2>
+      <nuxt-link to="a"><button class="button">使ってみる</button></nuxt-link>
 
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
-      </div>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue';
-
 export default {
-  components: {
-    Logo,
-  },
-  data() {
-    return {
-      value: null,
-    };
-  },
+  layout: 'home',
 };
 </script>
 
-<style>
-.container {
-  min-height: 100vh;
+<style lang="scss">
+.home.container {
+  align-items: center;
+  background-size: cover;
+  background: url('~assets/top-background.jpg') no-repeat center center;
+  color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  min-height: 100vh;
   text-align: center;
-}
+  text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14),
+    0px 1px 5px rgba(0, 0, 0, 0.12);
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  .title {
+    display: block;
+    font-size: 3.5rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 35px;
+  }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+  .subtitle {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 2rem;
+    margin-bottom: 35px;
+    padding-bottom: 15px;
+    word-spacing: 5px;
+  }
 
-.links {
-  padding-top: 15px;
+  .button {
+    background: #d84f00;
+    border-radius: 10px;
+    border: 0;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    color: white;
+    cursor: pointer;
+    font-size: 1.25rem;
+    height: 54px;
+    width: 280px;
+  }
 }
 </style>
