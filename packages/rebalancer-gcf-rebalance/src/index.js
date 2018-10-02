@@ -1,5 +1,4 @@
-import uuid from 'uuid';
-import Portfolio from './dataforge';
+import Rebalancer from './Rebalancer';
 
 // const dataforge = require('./dataforge');
 
@@ -10,11 +9,17 @@ import Portfolio from './dataforge';
  * @param {Object} res Cloud Function response context.
  */
 
-const a = 1;
-const b = 1;
+const rebalance = (req, res) => {
+  if (req.method !== 'POST') return res.sendStatus(404);
+  const { assets, adjust } = req.body;
 
-const helloGET = (req, res) => {
-  res.send(uuid.v4());
+  try {
+    const rebalancer = new Rebalancer(assets);
+    const result = rebalancer.rebalance(adjust);
+    res.send(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 };
 
-export { helloGET };
+export { rebalance };

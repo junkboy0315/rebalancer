@@ -1,7 +1,7 @@
-import { Portfolio } from '../dataforge';
+import Rebalancer from '../Rebalancer';
 
-describe('Portfolio', () => {
-  let portfolio;
+describe('Rebalancer', () => {
+  let rebalancer;
 
   const assets = [
     { id: 1, amount: 250, targetRate: 20 },
@@ -11,7 +11,7 @@ describe('Portfolio', () => {
   ];
 
   beforeEach(() => {
-    portfolio = new Portfolio(assets);
+    rebalancer = new Rebalancer(assets);
   });
 
   it('can rebalance 53', () => {
@@ -58,8 +58,8 @@ describe('Portfolio', () => {
       },
     ];
 
-    portfolio.rebalance(53);
-    expect(portfolio.workDf.toArray()).toEqual(expectedWorkDf);
+    rebalancer.rebalance(53);
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
   it('can rebalance 200', () => {
@@ -106,8 +106,8 @@ describe('Portfolio', () => {
       },
     ];
 
-    portfolio.rebalance(200);
-    expect(portfolio.workDf.toArray()).toEqual(expectedWorkDf);
+    rebalancer.rebalance(200);
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
   it('can rebalance 633', () => {
@@ -154,8 +154,8 @@ describe('Portfolio', () => {
       },
     ];
 
-    portfolio.rebalance(633);
-    expect(portfolio.workDf.toArray()).toEqual(expectedWorkDf);
+    rebalancer.rebalance(633);
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
   it('can rebalance -39', () => {
@@ -202,8 +202,8 @@ describe('Portfolio', () => {
       },
     ];
 
-    portfolio.rebalance(-39);
-    expect(portfolio.workDf.toArray()).toEqual(expectedWorkDf);
+    rebalancer.rebalance(-39);
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
   it('can rebalance -101', () => {
@@ -250,8 +250,8 @@ describe('Portfolio', () => {
       },
     ];
 
-    portfolio.rebalance(-101);
-    expect(portfolio.workDf.toArray()).toEqual(expectedWorkDf);
+    rebalancer.rebalance(-101);
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
   it('can rebalance -613', () => {
@@ -298,14 +298,26 @@ describe('Portfolio', () => {
       },
     ];
 
-    portfolio.rebalance(-613);
-    expect(portfolio.workDf.toArray()).toEqual(expectedWorkDf);
+    rebalancer.rebalance(-613);
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
   it('throw error when adjustment exceed the current total', () => {
-    test = () => {
-      portfolio.rebalance(-2000);
-    };
-    expect(test).toThrow();
+    const tests = [
+      () => {
+        rebalancer = new Rebalancer();
+      },
+      () => {
+        rebalancer = new Rebalancer(assets);
+        rebalancer.rebalance();
+      },
+      () => {
+        rebalancer = new Rebalancer(assets);
+        rebalancer.rebalance('not integer');
+      },
+    ];
+    tests.forEach(test => {
+      expect(test).toThrow();
+    });
   });
 });

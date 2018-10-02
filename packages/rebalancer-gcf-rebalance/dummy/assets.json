@@ -1,0 +1,8 @@
+{
+  "assets": [
+    { "id": 1, "amount": 250, "targetRate": 20 },
+    { "id": 2, "amount": 200, "targetRate": 20 },
+    { "id": 3, "amount": 300, "targetRate": 20 },
+    { "id": 4, "amount": 400, "targetRate": 40 }
+  ]
+}

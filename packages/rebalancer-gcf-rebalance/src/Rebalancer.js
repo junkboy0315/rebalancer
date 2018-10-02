@@ -1,11 +1,12 @@
 import { DataFrame } from 'data-forge';
 
-export class Portfolio {
+export default class Rebalancer {
   /**
    *
    * @param {{id: number, amount: number, targetRate: number}} assets
    */
   constructor(assets) {
+    if (!assets) throw Error('assets is not provided');
     this.df = new DataFrame(assets);
   }
 
@@ -147,6 +148,9 @@ export class Portfolio {
    * @returns {{id: number, amount: number, adjust: number}}
    */
   rebalance(adjustAmount) {
+    if (!adjustAmount || !Number.isInteger(adjustAmount))
+      throw Error('adjust amount is invalid');
+
     this.srcCurrentTotal = this.df.getSeries('amount').sum();
     this.dstTargetTotal = this.df
       .deflate(row => row.amount * (100 / row.targetRate))
@@ -165,7 +169,7 @@ export class Portfolio {
       .dropSeries(['amount', 'targetRate']);
 
     if (adjustAmount < 0 && Math.abs(adjustAmount) > this.srcCurrentTotal) {
-      throw new Error(
+      throw Error(
         'The minus adjustment amount must be less than current total'
       );
     }
@@ -176,7 +180,6 @@ export class Portfolio {
 
     const result = this.workDf.toArray().map(_ => ({
       id: _.id,
-      amount: _.srcAmount,
       adjust: _.dstAdjust,
     }));
     return result;

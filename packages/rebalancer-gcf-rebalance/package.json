@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist --ignore **/__tests__/**",
-    "deploy:local": "yarn build && functions deploy helloGET --trigger-http",
-    "deploy": "yarn build && gcloud beta functions deploy helloGET --trigger-http",
+    "deploy:local": "yarn build && functions deploy rebalance --trigger-http",
+    "deploy": "yarn build && gcloud beta functions deploy rebalance --trigger-http",
     "test": "jest"
   },
   "author": "",
