@@ -1,6 +1,7 @@
 <template>
   <div class="my-container">
-    {{ assetName }}<input class="input" type="text" placeholder="Text input" />円
+    {{ assetName }}
+    <input class="input" type="text" placeholder="Text input">円
   </div>
 </template>
 

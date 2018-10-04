@@ -3,11 +3,17 @@
     <div class="container">
       <div class="navbar-brand">
         <!-- brand name -->
-        <nuxt-link to="/portfolio" class="navbar-item">
-          Portfolio Rebalancer
-        </nuxt-link>
+        <nuxt-link to="/portfolio" class="navbar-item">Portfolio Rebalancer</nuxt-link>
         <!-- humberger icon -->
-        <a :class="{'is-active': isHumbergerOpen}" @click="toggleHumberger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a
+          :class="{'is-active': isHumbergerOpen}"
+          @click="toggleHumberger"
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -16,12 +22,8 @@
       <div :class="{'is-active': isHumbergerOpen}" class="navbar-menu">
         <div class="navbar-end">
           <!-- menu items -->
-          <nuxt-link @click.native="closeHumberger" to="/portfolio" class="navbar-item">
-            Portfolio
-          </nuxt-link>
-          <nuxt-link @click.native="closeHumberger" to="/account" class="navbar-item">
-            Account
-          </nuxt-link>
+          <nuxt-link @click.native="closeHumberger" to="/portfolio" class="navbar-item">Portfolio</nuxt-link>
+          <nuxt-link @click.native="closeHumberger" to="/account" class="navbar-item">Account</nuxt-link>
         </div>
       </div>
     </div>

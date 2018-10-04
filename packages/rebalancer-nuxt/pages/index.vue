@@ -1,12 +1,11 @@
 <template>
   <section class="home">
     <div>
-      <h1 class="title has-text-white">
-        Portfolio Rebalancer
-      </h1>
+      <h1 class="title has-text-white">Portfolio Rebalancer</h1>
       <h2 class="subtitle has-text-white">
-        <span>面倒なリバランスの計算を楽に行うためのツールです。<br/>
-        株式、投資信託、仮想通貨など、幅広くご利用いただけます。</span>
+        <span>面倒なリバランスの計算を楽に行うためのツールです。
+          <br>株式、投資信託、仮想通貨など、幅広くご利用いただけます。
+        </span>
       </h2>
       <nuxt-link to="portfolio" class="button is-primary">使ってみる</nuxt-link>
     </div>

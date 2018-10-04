@@ -1,30 +1,27 @@
 <template>
   <div class="card">
-
     <div class="liner">
       <div class="has-text-weight-bold">追加投資額（売却額）</div>
-      <input class="input" type="text" placeholder="Text input" />
+      <input class="input" type="text" placeholder="Text input">
     </div>
-
-      <div class="liner">
-        <div class="has-text-weight-bold">リバランスの種別</div>
-        <div class="">
-          <label class="radio">
-            <input type="radio" id="sell" value="sell" v-model="rebalanceType">
-            <span>セルリバランス</span>
-          </label><br />
-          <label class="radio">
-            <input type="radio" id="nosell" value="nosell" v-model="rebalanceType" />
-            <span>ノーセルリバランス</span>
-          </label>
-        </div>
+    <div class="liner">
+      <div class="has-text-weight-bold">リバランスの種別</div>
+      <div class="">
+        <label class="radio">
+          <input type="radio" id="sell" value="sell" v-model="rebalanceType">
+          <span>セルリバランス</span>
+        </label>
+        <br>
+        <label class="radio">
+          <input type="radio" id="nosell" value="nosell" v-model="rebalanceType">
+          <span>ノーセルリバランス</span>
+        </label>
       </div>
-
-      <div class="liner">
-        <nuxt-link to="?mode=rebalance-result" class="button is-primary">リバランスを実行する</nuxt-link>
-      </div>
-
     </div>
+    <div class="liner">
+      <nuxt-link to="?mode=rebalance-result" class="button is-primary">リバランスを実行する</nuxt-link>
+    </div>
+  </div>
 </template>
 
 <script>

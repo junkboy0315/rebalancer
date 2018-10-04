@@ -1,16 +1,17 @@
 <template>
   <section class="portfolio">
-
     <h1>Portfolio</h1>
-
     <div class="portfolio-grid">
-      <PortfolioCard v-for="portfolio in portfolios" :key="portfolio.id" :portfolio="portfolio" />
-
+      <PortfolioCard v-for="portfolio in portfolios" :key="portfolio.id" :portfolio="portfolio"/>
       <nuxt-link to="/portfolio/new" class="card add-portfolio">
         <div class="card-content">
-          <div class=""><i class="fas fa-plus"></i></div>
-          <div class="">ポートフォリオを<br/>新規作成する</div>
+          <div class="">
+            <i class="fas fa-plus"></i>
           </div>
+          <div class="">ポートフォリオを
+            <br>新規作成する
+          </div>
+        </div>
       </nuxt-link>
     </div>
   </section>

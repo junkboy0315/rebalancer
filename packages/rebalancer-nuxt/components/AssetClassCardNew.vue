@@ -1,7 +1,9 @@
 <template>
   <div class="card">
     <a class="my-container">
-      <div><i class="fas fa-plus"></i>アセットクラスを追加する</div>
+      <div>
+        <i class="fas fa-plus"></i>アセットクラスを追加する
+      </div>
     </a>
   </div>
 </template>

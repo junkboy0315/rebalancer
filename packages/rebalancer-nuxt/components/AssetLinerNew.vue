@@ -1,6 +1,8 @@
 <template>
   <div class="my-container">
-    <div class=""><i class="fas fa-plus"></i>アセットを追加する</div>
+    <div class="">
+      <i class="fas fa-plus"></i>アセットを追加する
+    </div>
   </div>
 </template>
 

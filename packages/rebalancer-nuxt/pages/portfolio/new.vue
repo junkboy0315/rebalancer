@@ -1,20 +1,16 @@
 <template>
   <div>
     <h1>Portfolio</h1>
-
     <div class="card">
-
       <div class="liner">
         <div class="my-title has-text-weight-bold">新しいポートフォリオの名前</div>
-        <input class="input" v-model="portfolioName" type="text" placeholder="Text input" />
-    </div>
-
-        <div class="liner">
-          <nuxt-link to="/portfolio" @click.native="createPortfolio" class="button is-primary">作成する</nuxt-link>
-        </div>
-
+        <input class="input" v-model="portfolioName" type="text" placeholder="Text input">
+      </div>
+      <div class="liner">
+        <nuxt-link to="/portfolio" @click.native="createPortfolio" class="button is-primary">作成する</nuxt-link>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
