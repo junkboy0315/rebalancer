@@ -7,14 +7,13 @@
       <PortfolioCard />
       <PortfolioCard />
 
-      <div class="card add-portfolio">
+      <nuxt-link to="/portfolio/new" class="card add-portfolio">
         <div class="card-content">
           <div class=""><i class="fas fa-plus"></i></div>
           <div class="">ポートフォリオを<br/>新規作成する</div>
           </div>
-        </div>
-      </div>
-
+      </nuxt-link>
+    </div>
   </section>
 </template>
 
