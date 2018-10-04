@@ -1,11 +1,7 @@
 <template>
   <section class="portfolio">
 
-    <div class="columns">
-      <div class="column is-12">
-        <h1>Portfolio</h1>
-      </div>
-    </div>
+    <h1>Portfolio</h1>
 
     <div class="portfolio-grid">
       <PortfolioCard />

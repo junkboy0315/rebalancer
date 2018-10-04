@@ -22,8 +22,8 @@ export default {
 <style lang="scss" scoped>
 .home {
   align-items: center;
-  background-size: cover;
   background: url('~assets/top-background.jpg') no-repeat center center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   min-height: 100vh;

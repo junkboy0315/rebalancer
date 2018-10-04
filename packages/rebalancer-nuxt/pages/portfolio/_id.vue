@@ -3,61 +3,26 @@
 
     <h1>Portfolio > Portfolio1</h1>
 
+    <AssetClassCard class="asset-class-card" />
+    <AssetClassCard class="asset-class-card" />
+    <AssetClassCardNew />
+
   </section>
 </template>
 
 <script>
-export default {};
+import AssetClassCard from '~/components/AssetClassCard';
+import AssetClassCardNew from '~/components/AssetClassCardNew';
+
+export default {
+  components: { AssetClassCard, AssetClassCardNew },
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .portfolio {
-  .postfolio-grid {
-    display: grid;
-    // max-width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 270px));
-    grid-gap: 1rem;
-
-    .card {
-      min-height: 244px;
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    .portfolio-title {
-      font-weight: bold;
-      margin-bottom: 16px;
-    }
-
-    .fa-dollar-sign {
-      color: #d84f00;
-      margin-right: 0.5rem;
-    }
-
-    .add-portfolio {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-      box-shadow: none;
-      border: 1px dotted #ccc;
-      &:hover {
-        background: white;
-        cursor: pointer;
-      }
-
-      .card-content {
-        text-align: center;
-        color: #d84f00;
-
-        i {
-          font-size: 3rem;
-          margin-bottom: 20px;
-        }
-      }
-    }
+  .asset-class-card {
+    margin-bottom: 28px;
   }
 }
 </style>
