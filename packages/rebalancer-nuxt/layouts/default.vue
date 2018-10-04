@@ -9,9 +9,13 @@
 
 <script>
 import Navbar from '~/components/Navbar';
+import firebase from '~/assets/js/firebase';
 
 export default {
   components: { Navbar },
+  async mounted() {
+    firebase.auth().signInAnonymously();
+  },
 };
 </script>
 

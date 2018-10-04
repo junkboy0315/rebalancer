@@ -4,8 +4,7 @@
     <h1>Portfolio</h1>
 
     <div class="portfolio-grid">
-      <PortfolioCard />
-      <PortfolioCard />
+      <PortfolioCard v-for="portfolio in portfolios" :key="portfolio.id" :portfolio="portfolio" />
 
       <nuxt-link to="/portfolio/new" class="card add-portfolio">
         <div class="card-content">
@@ -19,8 +18,33 @@
 
 <script>
 import PortfolioCard from '~/components/PortfolioCard';
+import firebase from '~/assets/js/firebase';
+
+const db = firebase.firestore();
+
 export default {
+  mounted() {
+    firebase.auth().onAuthStateChanged(async user => {
+      const portfolios = await db
+        .collection('portfolios')
+        .where('owner', '==', user.uid)
+        .get();
+
+      portfolios.forEach(_ =>
+        this.portfolios.push({
+          id: _.id,
+          ..._.data(),
+        })
+      );
+      console.log(this.portfolios);
+    });
+  },
   components: { PortfolioCard },
+  data() {
+    return {
+      portfolios: [],
+    };
+  },
 };
 </script>
 
@@ -39,6 +63,7 @@ export default {
   background: transparent;
   box-shadow: none;
   border: 1px dotted #ccc;
+
   &:hover {
     background: white;
     cursor: pointer;

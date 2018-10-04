@@ -1,10 +1,10 @@
 <template>
-  <nuxt-link to="/portfolio/1234" class="card">
+  <nuxt-link :to="'/portfolio/'+ portfolio.id" class="card">
     <div class="card-content is-flex">
 
       <div class="icon"><i class="fas fa-chart-pie"></i></div>
       <div class="contents-column">
-        <div class="portfolio-title">Portfolio1</div>
+        <div class="portfolio-title">{{ portfolio.name }}</div>
         <PortfolioCardLiner title="総額" value="1,358,000円" />
         <PortfolioCardLiner title="乖離度" value="低い" />
         <PortfolioCardLiner title="アセットクラス数" value="3" />
@@ -18,6 +18,7 @@
 import PortfolioCardLiner from '~/components/PortfolioCardLiner';
 
 export default {
+  props: { portfolio: { type: Object, required: true } },
   components: { PortfolioCardLiner },
 };
 </script>

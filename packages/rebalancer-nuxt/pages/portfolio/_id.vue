@@ -1,15 +1,14 @@
 <template>
   <section class="portfolio">
-
+    {{ portfolio }}
     <template v-if="!query.mode">
       <div class="top-line">
         <h1>Portfolio > Portfolio1 </h1>
         <nuxt-link to="?mode=rebalance" class="button is-primary">リバランスを実行する</nuxt-link>
       </div>
 
-      <AssetClassCard class="asset-class-card" />
-      <AssetClassCard class="asset-class-card" />
-      <AssetClassCardNew />
+      <AssetClassCard v-for="assetClass in portfolio.assetClasses" class="asset-class-card" />
+      <AssetClassCardNew @click.native="addAssetClass" />
     </template>
 
     <template v-if="query.mode==='rebalance'">
@@ -35,6 +34,9 @@ import AssetClassCard from '~/components/AssetClassCard';
 import AssetClassCardNew from '~/components/AssetClassCardNew';
 import RebalanceSetting from '~/components/RebalanceSetting';
 import RebalanceResult from '~/components/RebalanceResult';
+import firebase from '~/assets/js/firebase';
+
+const db = firebase.firestore();
 
 export default {
   components: {
@@ -43,10 +45,29 @@ export default {
     RebalanceSetting,
     RebalanceResult,
   },
+  mounted() {
+    firebase.auth().onAuthStateChanged(async user => {
+      const portfolio = await db
+        .doc(`portfolios/${this.$route.params.id}`)
+        .get();
+
+      this.portfolio = portfolio.data();
+    });
+  },
   data() {
     return {
+      portfolio: {},
       query: this.$route.query,
     };
+  },
+  methods: {
+    async addAssetClass() {
+      this.portfolio.assetClasses.push({ name: 'domestic!' });
+      await db
+        .collection('portfolios')
+        .doc(this.$route.params.id)
+        .set(this.portfolio, { merge: true });
+    },
   },
   watchQuery: ['mode'],
 };

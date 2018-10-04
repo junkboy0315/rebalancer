@@ -6,11 +6,11 @@
 
       <div class="liner">
         <div class="my-title has-text-weight-bold">新しいポートフォリオの名前</div>
-        <input class="input" type="text" placeholder="Text input" />
+        <input class="input" v-model="portfolioName" type="text" placeholder="Text input" />
     </div>
 
         <div class="liner">
-          <nuxt-link to="?mode=rebalance-result" class="button is-primary">作成する</nuxt-link>
+          <nuxt-link to="/portfolio" @click.native="createPortfolio" class="button is-primary">作成する</nuxt-link>
         </div>
 
       </div>
@@ -18,12 +18,25 @@
 </template>
 
 <script>
+import firebase from '~/assets/js/firebase';
+const db = firebase.firestore();
+
 export default {
   components: {},
   data() {
     return {
-      rebalanceType: '',
+      portfolioName: '',
     };
+  },
+  methods: {
+    async createPortfolio() {
+      const uid = firebase.auth().currentUser.uid;
+      await db.collection('portfolios').add({
+        owner: uid,
+        name: this.portfolioName,
+        assetClasses: [],
+      });
+    },
   },
 };
 </script>
