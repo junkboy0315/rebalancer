@@ -1,42 +1,36 @@
 <template>
   <div class="card">
-
     <!-- top line -->
     <div class="level first-line">
-
       <div class="level-item asset-class-name">
-        <div class="icon"><i class="fas fa-caret-square-right"></i></div>
-        <div class="asset-class-title">国内株式クラス</div>
+        <div class="icon">
+          <i class="fas fa-caret-square-right"></i>
+        </div>
+        <div
+          class="asset-class-title"
+          @click="onAssetClassDelete(assetClass.id)"
+        >{{ assetClass.name }}</div>
       </div>
-
       <div class="level-item target-rate">
         <label>目標割合:</label>
-        <input class="input" type="text" placeholder="Text input" />%
+        <input class="input" type="text" placeholder="Text input">%
       </div>
-
-        <div class="level-item current-total">
-          <label>現在の評価額:</label>
-          123,344円
-        </div>
-
-        <div class="level-item current-deviation">
-          <label>目標との乖離:</label>
-          123,344円
-        </div>
-
+      <div class="level-item current-total">
+        <label>現在の評価額:</label>
+        123,344円
       </div>
-
-      <Divider color="#525252" />
-
-      <AssetLiner assetName="eMAXIS TOPIX インデックス" />
-      <Divider color="#ebeef5" />
-
-      <AssetLiner assetName="1475 iシェアーズ TOPIX ETF" />
-      <Divider color="#ebeef5" />
-
-      <AssetLinerNew />
-
+      <div class="level-item current-deviation">
+        <label>目標との乖離:</label>
+        123,344円
+      </div>
     </div>
+    <Divider color="#525252"/>
+    <AssetLiner assetName="eMAXIS TOPIX インデックス"/>
+    <Divider color="#ebeef5"/>
+    <AssetLiner assetName="1475 iシェアーズ TOPIX ETF"/>
+    <Divider color="#ebeef5"/>
+    <AssetLinerNew/>
+  </div>
 </template>
 
 <script>
@@ -45,6 +39,16 @@ import AssetLiner from './AssetLiner';
 import AssetLinerNew from './AssetLinerNew';
 
 export default {
+  props: {
+    assetClass: {
+      type: Object,
+      required: true,
+    },
+    onAssetClassDelete: {
+      type: Function,
+      required: true,
+    },
+  },
   components: {
     Divider,
     AssetLiner,
