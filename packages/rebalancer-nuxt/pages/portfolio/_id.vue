@@ -2,7 +2,10 @@
   <section class="portfolio">
 
     <template v-if="!query.mode">
-      <h1>Portfolio > Portfolio1 </h1>
+      <div class="top-line">
+        <h1>Portfolio > Portfolio1 </h1>
+        <nuxt-link to="?mode=rebalance" class="button is-primary">リバランスを実行する</nuxt-link>
+      </div>
 
       <AssetClassCard class="asset-class-card" />
       <AssetClassCard class="asset-class-card" />
@@ -16,7 +19,12 @@
     </template>
 
     <template v-if="query.mode==='rebalance-result'">
-      <h1>Portfolio > Portfolio1 > Rebalance-Result</h1>
+      <div class="top-line">
+        <h1>Portfolio > Portfolio1 > Rebalance-Result</h1>
+        <nuxt-link to="?mode=rebalance" class="button is-primary">リバランスを実行する</nuxt-link>
+      </div>
+
+      <RebalanceResult />
     </template>
 
   </section>
@@ -26,9 +34,15 @@
 import AssetClassCard from '~/components/AssetClassCard';
 import AssetClassCardNew from '~/components/AssetClassCardNew';
 import RebalanceSetting from '~/components/RebalanceSetting';
+import RebalanceResult from '~/components/RebalanceResult';
 
 export default {
-  components: { AssetClassCard, AssetClassCardNew, RebalanceSetting },
+  components: {
+    AssetClassCard,
+    AssetClassCardNew,
+    RebalanceSetting,
+    RebalanceResult,
+  },
   data() {
     return {
       query: this.$route.query,
@@ -40,6 +54,11 @@ export default {
 
 <style lang="scss" scoped>
 .portfolio {
+  .top-line {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .asset-class-card {
     margin-bottom: 28px;
   }
