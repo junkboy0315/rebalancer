@@ -19,10 +19,25 @@
         >{{asset.name}}: {{asset.adjust}}円の購入を行ってください</div>
       </div>
       <Divider/>
-      <div class="my-container">
+      <div v-if="calcResult.length > 0" class="my-container">
         <div class="has-text-weight-bold">リバランス前後のポートフォリオ</div>
-        <div>リバランス前</div>
-        <div>リバランス後</div>
+        <div class="is-flex">
+          <div>
+            <div>リバランス前</div>
+            <div class="chart-container">
+              <MyChart :labels="mergedResult.map(_=>_.name)" :data="mergedResult.map(_=>_.amount)"/>
+            </div>
+          </div>
+          <div>
+            <div>リバランス後</div>
+            <div class="chart-container">
+              <MyChart
+                :labels="mergedResult.map(_=>_.name)"
+                :data="mergedResult.map(_=>_.amount + _.adjust)"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -31,12 +46,14 @@
 <script>
 import Divider from '~/components/Divider';
 import firebase from '~/assets/js/firebase';
+import MyChart from '~/components/MyChart';
 
 const db = firebase.firestore();
 
 export default {
   components: {
     Divider,
+    MyChart,
   },
   async mounted() {
     const portfolio = await db.doc(`portfolios/${this.$route.params.id}`).get();
@@ -74,7 +91,10 @@ export default {
         );
         return {
           ..._,
-          amount: originalData.amount,
+          amount: originalData.assets.reduce(
+            (acc, next) => acc + next.amount,
+            0
+          ),
           name: originalData.name,
           targetRate: originalData.targetRate,
         };
@@ -104,5 +124,9 @@ export default {
 
 .my-container {
   padding: 32px;
+
+  .chart-container {
+    max-width: 300px;
+  }
 }
 </style>
