@@ -13,7 +13,13 @@
       </div>
       <div class="level-item target-rate">
         <label>目標割合:</label>
-        <input class="input" type="text" placeholder="Text input">%
+        <input
+          @change="onTargetRateChange(assetClass.id, $event)"
+          class="input"
+          type="number"
+          :value="assetClass.targetRate"
+          placeholder="Text input"
+        >%
       </div>
       <div class="level-item current-total">
         <label>現在の評価額:</label>
@@ -25,11 +31,16 @@
       </div>
     </div>
     <Divider color="#525252"/>
-    <AssetLiner assetName="eMAXIS TOPIX インデックス"/>
-    <Divider color="#ebeef5"/>
-    <AssetLiner assetName="1475 iシェアーズ TOPIX ETF"/>
-    <Divider color="#ebeef5"/>
-    <AssetLinerNew/>
+    <template v-for="asset in assetClass.assets">
+      <AssetLiner
+        :asset="asset"
+        :onDelete="(assetId)=>onAssetDelete(assetClass.id, assetId)"
+        :onAmountChange="(assetId, event)=>onAssetAmountChange(assetClass.id, assetId, event)"
+        :key="asset.id+'-liner'"
+      />
+      <Divider color="#ebeef5" :key="asset.id+'divider'"/>
+    </template>
+    <AssetLinerNew @click.native="onAddAsset(assetClass.id)"/>
   </div>
 </template>
 
@@ -37,6 +48,9 @@
 import Divider from './Divider';
 import AssetLiner from './AssetLiner';
 import AssetLinerNew from './AssetLinerNew';
+import firebase from '~/assets/js/firebase';
+
+const db = firebase.firestore();
 
 export default {
   props: {
@@ -45,6 +59,22 @@ export default {
       required: true,
     },
     onAssetClassDelete: {
+      type: Function,
+      required: true,
+    },
+    onTargetRateChange: {
+      type: Function,
+      required: true,
+    },
+    onAddAsset: {
+      type: Function,
+      required: true,
+    },
+    onAssetDelete: {
+      type: Function,
+      required: true,
+    },
+    onAssetAmountChange: {
       type: Function,
       required: true,
     },
@@ -78,7 +108,8 @@ export default {
     }
 
     .target-rate input {
-      width: 3rem;
+      width: 5rem;
+      text-align: center;
     }
   }
 }
