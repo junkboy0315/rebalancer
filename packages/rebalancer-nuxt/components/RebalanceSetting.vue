@@ -2,7 +2,7 @@
   <div class="card">
     <div class="liner">
       <div class="has-text-weight-bold">追加投資額（売却額）</div>
-      <input class="input" type="text" placeholder="Text input">
+      <input v-model="adjust" class="input" type="number" placeholder="">
     </div>
     <div class="liner">
       <div class="has-text-weight-bold">リバランスの種別</div>
@@ -20,7 +20,7 @@
     </div>
     <div class="liner">
       <nuxt-link
-        :to="'/portfolio/' + this.$route.params.id + '/result'"
+        :to="`/portfolio/${this.$route.params.id}/result?rebalanceType=${this.rebalanceType}&adjust=${this.adjust}`"
         class="button is-primary"
       >リバランスを実行する</nuxt-link>
     </div>
@@ -32,6 +32,7 @@ export default {
   components: {},
   data() {
     return {
+      adjust: '',
       rebalanceType: '',
     };
   },

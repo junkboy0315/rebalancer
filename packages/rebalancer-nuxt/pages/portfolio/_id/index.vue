@@ -23,8 +23,6 @@
 import uuid from 'uuid/v4';
 import AssetClassCard from '~/components/AssetClassCard';
 import AssetClassCardNew from '~/components/AssetClassCardNew';
-import RebalanceSetting from '~/components/RebalanceSetting';
-import RebalanceResult from '~/components/RebalanceResult';
 import firebase from '~/assets/js/firebase';
 
 const db = firebase.firestore();
@@ -33,8 +31,6 @@ export default {
   components: {
     AssetClassCard,
     AssetClassCardNew,
-    RebalanceSetting,
-    RebalanceResult,
   },
   mounted() {
     firebase.auth().onAuthStateChanged(async user => {
