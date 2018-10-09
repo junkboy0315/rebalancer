@@ -19,7 +19,10 @@
       </div>
     </div>
     <div class="liner">
-      <nuxt-link to="?mode=rebalance-result" class="button is-primary">リバランスを実行する</nuxt-link>
+      <nuxt-link
+        :to="'/portfolio/' + this.$route.params.id + '/result'"
+        class="button is-primary"
+      >リバランスを実行する</nuxt-link>
     </div>
   </div>
 </template>

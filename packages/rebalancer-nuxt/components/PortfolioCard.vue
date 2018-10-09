@@ -5,7 +5,7 @@
         <i class="fas fa-chart-pie"></i>
       </div>
       <div class="contents-column">
-        <div class="portfolio-title">{{ portfolio.name }}</div>
+        <div class="portfolio-title">{{ portfolio.data().name }}</div>
         <PortfolioCardLiner title="総額" value="1,358,000円"/>
         <PortfolioCardLiner title="乖離度" value="低い"/>
         <PortfolioCardLiner title="アセットクラス数" value="3"/>

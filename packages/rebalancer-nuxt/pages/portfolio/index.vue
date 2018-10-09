@@ -31,13 +31,7 @@ export default {
         .where('owner', '==', user.uid)
         .get();
 
-      portfolios.forEach(_ =>
-        this.portfolios.push({
-          id: _.id,
-          ..._.data(),
-        })
-      );
-      console.log(this.portfolios);
+      this.portfolios = portfolios.docs;
     });
   },
   components: { PortfolioCard },
