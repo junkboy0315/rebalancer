@@ -6,10 +6,16 @@
         <div class="icon">
           <i class="fas fa-caret-square-right"></i>
         </div>
-        <div
-          class="asset-class-title"
-          @click="onAssetClassDelete(assetClass.id)"
-        >{{ assetClass.name }}</div>
+        <input
+          :value="assetClass.name"
+          class="input"
+          :class="{'is-static': !isTitleEditMode}"
+          :style="{'text-decoration': isTitleEditMode ? 'none':'underline' }"
+          ref="titleInput"
+          @click="isTitleEditMode = true"
+          @change="_onAssetClassNameChange($event)"
+          @blur="isTitleEditMode = false"
+        >
       </div>
       <div class="level-item target-rate">
         <label>目標割合:</label>
@@ -29,12 +35,16 @@
         <label>目標との乖離:</label>
         123,344円
       </div>
+      <div class="level-item icon" @click="onAssetClassDelete(assetClass.id)">
+        <i class="fas fa-trash"></i>
+      </div>
     </div>
     <Divider color="#525252"/>
     <template v-for="asset in assetClass.assets">
       <AssetLiner
         :asset="asset"
         :onDelete="(assetId)=>onAssetDelete(assetClass.id, assetId)"
+        :onNameChange="(assetId, event)=>onAssetNameChange(assetClass.id, assetId, event)"
         :onAmountChange="(assetId, event)=>onAssetAmountChange(assetClass.id, assetId, event)"
         :key="asset.id+'-liner'"
       />
@@ -74,6 +84,14 @@ export default {
       type: Function,
       required: true,
     },
+    onAssetClassNameChange: {
+      type: Function,
+      required: true,
+    },
+    onAssetNameChange: {
+      type: Function,
+      required: true,
+    },
     onAssetAmountChange: {
       type: Function,
       required: true,
@@ -83,6 +101,19 @@ export default {
     Divider,
     AssetLiner,
     AssetLinerNew,
+  },
+  data() {
+    return {
+      isTitleEditMode: false,
+    };
+  },
+  methods: {
+    _onAssetClassNameChange() {
+      const that = this;
+      this.isTitleEditMode = false;
+      this.$refs.titleInput.blur();
+      this.onAssetClassNameChange(that.assetClass.id, event);
+    },
   },
 };
 </script>

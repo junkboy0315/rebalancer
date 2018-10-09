@@ -12,6 +12,8 @@
       :onTargetRateChange="changeTargetRate"
       :onAddAsset="addAsset"
       :onAssetDelete="deleteAsset"
+      :onAssetClassNameChange="onAssetClassNameChange"
+      :onAssetNameChange="onAssetNameChange"
       :onAssetAmountChange="onAssetAmountChange"
       class="asset-class-card"
     />
@@ -52,7 +54,7 @@ export default {
         .update({
           assetClasses: [
             ...this.portfolio.assetClasses,
-            { id: uuid(), name: 'domestic!', assets: [] },
+            { id: uuid(), name: 'domestic!', assets: [], targetRate: 0 },
           ],
         });
     },
@@ -110,6 +112,40 @@ export default {
             return {
               ..._,
               assets: _.assets.filter(asset => asset.id !== assetId),
+            };
+          }),
+        });
+    },
+    async onAssetClassNameChange(assetClassId, event) {
+      await db
+        .collection('portfolios')
+        .doc(this.$route.params.id)
+        .update({
+          assetClasses: this.portfolio.assetClasses.map(_ => {
+            if (_.id !== assetClassId) return _;
+            return {
+              ..._,
+              name: event.target.value,
+            };
+          }),
+        });
+    },
+    async onAssetNameChange(assetClassId, assetId, event) {
+      await db
+        .collection('portfolios')
+        .doc(this.$route.params.id)
+        .update({
+          assetClasses: this.portfolio.assetClasses.map(_ => {
+            if (_.id !== assetClassId) return _;
+            return {
+              ..._,
+              assets: _.assets.map(asset => {
+                if (asset.id !== assetId) return asset;
+                return {
+                  ...asset,
+                  name: event.target.value,
+                };
+              }),
             };
           }),
         });

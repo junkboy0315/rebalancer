@@ -1,14 +1,35 @@
 <template>
-  <div class="my-container">
-    {{ asset.name }}
-    <input
-      :value="asset.amount"
-      @change="onAmountChange(asset.id, $event)"
-      class="input"
-      type="number"
-      placeholder="Text input"
-    >円
-    <div @click="onDelete(asset.id)">削除</div>
+  <div class="level is-marginless is-mobile">
+    <div class="level-left">
+      <div class="level-item">
+        <input
+          :value="asset.name"
+          @click="isEditMode = true"
+          @change="_onNameChange(asset.id, $event)"
+          @blur="isEditMode = false"
+          class="input level-item"
+          :class="{'is-static': !isEditMode}"
+          ref="assetNameInput"
+          placeholder=""
+        >
+      </div>
+      <div class="level-item">
+        <input
+          :value="asset.amount"
+          @change="onAmountChange(asset.id, $event)"
+          class="input level-item"
+          type="number"
+          placeholder="Text input"
+        >円
+      </div>
+      <div class="level-right">
+        <a @click="onDelete(asset.id)" class="level-item">
+          <div class="icon">
+            <i class="fas fa-trash"></i>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,21 +44,38 @@ export default {
       type: Function,
       required: true,
     },
+    onNameChange: {
+      type: Function,
+      required: true,
+    },
     onAmountChange: {
       type: Function,
       required: true,
+    },
+  },
+  data() {
+    return {
+      isEditMode: false,
+    };
+  },
+  methods: {
+    _onNameChange(assetId, event) {
+      this.isEditMode = false;
+      this.$refs.assetNameInput.blur();
+      this.onNameChange(assetId, event);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.my-container {
+.level {
   padding: 12px;
   padding-left: 3rem;
 }
 input {
   width: 10rem;
   vertical-align: baseline;
+  text-align: center;
 }
 </style>
