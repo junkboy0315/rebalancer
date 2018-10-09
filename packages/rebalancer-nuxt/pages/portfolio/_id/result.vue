@@ -2,7 +2,7 @@
   <section class="portfolio">
     <div class="top-line">
       <h1>Portfolio > Portfolio1 > Rebalance-Result</h1>
-      <nuxt-link to="?mode=rebalance" class="button is-primary">リバランスを実行する</nuxt-link>
+      <nuxt-link to="./rebalance" class="button is-primary">リバランスを再試算する</nuxt-link>
     </div>
     <div class="card">
       <div class="my-container">
@@ -38,22 +38,19 @@ export default {
   components: {
     Divider,
   },
-  mounted() {
-    firebase.auth().onAuthStateChanged(user => {
-      db.doc(`portfolios/${this.$route.params.id}`).onSnapshot(async doc => {
-        this.portfolio = doc.data();
+  async mounted() {
+    const portfolio = await db.doc(`portfolios/${this.$route.params.id}`).get();
+    this.portfolio = portfolio.data();
 
-        const payload = {
-          assets: this.assets,
-          adjust: +this.$route.query.adjust,
-        };
-        const result = await this.$axios.$post(
-          'https://us-central1-rebalancer-218123.cloudfunctions.net/rebalance',
-          payload
-        );
-        this.calcResult = result;
-      });
-    });
+    const payload = {
+      assets: this.assets,
+      adjust: +this.$route.query.adjust,
+    };
+    const result = await this.$axios.$post(
+      'https://us-central1-rebalancer-218123.cloudfunctions.net/rebalance',
+      payload
+    );
+    this.calcResult = result;
   },
   computed: {
     total() {

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar/>
     <div class="container child-contents">
-      <nuxt />
+      <nuxt/>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ import firebase from '~/assets/js/firebase';
 export default {
   components: { Navbar },
   async mounted() {
-    firebase.auth().signInAnonymously();
+    await firebase.auth().signInAnonymously();
   },
 };
 </script>
