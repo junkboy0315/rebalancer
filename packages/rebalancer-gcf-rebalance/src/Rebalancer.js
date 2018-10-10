@@ -17,7 +17,7 @@ export default class Rebalancer {
   // distribute `remaining` to the min(max) rate asset(s) at the rate of `srcTargetRate`
   scatter(remaining) {
     const rates = this.workDf
-      .getSeries('dstCurrentRate')
+      .getSeries('dstDeviation')
       .distinct()
       .toArray()
       .sort();
@@ -32,17 +32,16 @@ export default class Rebalancer {
     }
 
     const srcTargetRateSum = this.workDf
-      .where(row => row.dstCurrentRate === minOrMaxRate)
+      .where(row => row.dstDeviation === minOrMaxRate)
       .getSeries('srcTargetRate')
       .sum();
 
     this.workDf = this.workDf.select(row => {
-      if (row.dstCurrentRate === minOrMaxRate) {
+      if (row.dstDeviation === minOrMaxRate) {
         const rasio = row.srcTargetRate / srcTargetRateSum;
 
         row.dstAdjust += Math.trunc(remaining * rasio);
-        row.dstCurrentRate =
-          (row.srcAmount + row.dstAdjust) / row.dstIdealAmount;
+        row.dstDeviation = (row.srcAmount + row.dstAdjust) / row.dstIdealAmount;
       }
       return row;
     });
@@ -50,7 +49,7 @@ export default class Rebalancer {
 
   fillGapRecursively(remaining) {
     const rates = this.workDf
-      .getSeries('dstCurrentRate')
+      .getSeries('dstDeviation')
       .distinct()
       .toArray()
       .sort();
@@ -74,7 +73,7 @@ export default class Rebalancer {
     const rateDiff = secondMinOrMaxRate - minOrMaxRate;
 
     const dstIdealAmountSum = this.workDf
-      .where(row => row.dstCurrentRate === minOrMaxRate)
+      .where(row => row.dstDeviation === minOrMaxRate)
       .getSeries('dstIdealAmount')
       .sum();
 
@@ -89,7 +88,7 @@ export default class Rebalancer {
 
     this.workDf = this.workDf.generateSeries({
       dstAdjust: row => {
-        if (row.dstCurrentRate === minOrMaxRate) {
+        if (row.dstDeviation === minOrMaxRate) {
           const adjust =
             Math.trunc(row.dstIdealAmount * secondMinOrMaxRate) -
             (row.srcAmount + row.dstAdjust);
@@ -98,11 +97,11 @@ export default class Rebalancer {
         }
         return row.dstAdjust;
       },
-      dstCurrentRate: row => {
-        if (row.dstCurrentRate === minOrMaxRate) {
-          row.dstCurrentRate = secondMinOrMaxRate;
+      dstDeviation: row => {
+        if (row.dstDeviation === minOrMaxRate) {
+          row.dstDeviation = secondMinOrMaxRate;
         }
-        return row.dstCurrentRate;
+        return row.dstDeviation;
       },
     });
 
@@ -114,7 +113,7 @@ export default class Rebalancer {
     if (fraction === 0) return;
 
     const idsByRates = this.workDf
-      .orderBy(row => row.dstCurrentRate)
+      .orderBy(row => row.dstDeviation)
       .getSeries('id')
       .toArray();
 
@@ -135,12 +134,12 @@ export default class Rebalancer {
         }
         return row.dstAdjust;
       },
-      dstCurrentRate: row => {
+      dstDeviation: row => {
         if (row.id === targetIdToAddFraction) {
-          row.dstCurrentRate =
+          row.dstDeviation =
             (row.srcAmount + row.dstAdjust) / row.dstIdealAmount;
         }
-        return row.dstCurrentRate;
+        return row.dstDeviation;
       },
     });
     this.smashFractionRecursively(fraction);
@@ -164,45 +163,58 @@ export default class Rebalancer {
       );
     }
 
+    const dstTargetTotal = srcCurrentTotal + adjustAmount;
+
+    this.workDf = this.df
+      .generateSeries({
+        srcTargetRate: row => row.targetRate,
+        srcAmount: row => row.amount,
+        srcIdealAmount: row => (srcCurrentTotal * row.targetRate) / 100,
+        srcDeviation: row => row.amount / row.srcIdealAmount,
+        dstIdealAmount: row => (dstTargetTotal * row.srcTargetRate) / 100,
+      })
+      .dropSeries(['amount', 'targetRate']);
+
     if (mode === 'nosell') {
-      const dstTargetTotal = srcCurrentTotal + adjustAmount;
-
-      this.workDf = this.df
-        .generateSeries({
-          srcAmount: row => row.amount,
-          srcTargetRate: row => row.targetRate,
-          srcIdealAmount: row => (srcCurrentTotal * row.targetRate) / 100,
-          srcCurrentRate: row => row.amount / row.srcIdealAmount,
-          dstAdjust: () => 0,
-          dstIdealAmount: row => (dstTargetTotal * row.srcTargetRate) / 100,
-          dstCurrentRate: row => row.amount / row.dstIdealAmount,
-        })
-        .dropSeries(['amount', 'targetRate']);
-
+      // no-selling mode
+      this.workDf = this.workDf.generateSeries({
+        dstAdjust: () => 0,
+        dstDeviation: row => row.srcAmount / row.dstIdealAmount,
+      });
       this.fillGapRecursively(adjustAmount);
-      let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
-      this.smashFractionRecursively(fraction);
     } else {
-      const dstTargetTotal = srcCurrentTotal + adjustAmount;
-
-      this.workDf = this.df
-        .generateSeries({
-          srcAmount: row => row.amount,
-          srcTargetRate: row => row.targetRate,
-          srcIdealAmount: row => (srcCurrentTotal * row.targetRate) / 100,
-          srcCurrentRate: row => row.amount / row.srcIdealAmount,
-          dstAdjust: row =>
-            Math.trunc((dstTargetTotal * row.srcTargetRate) / 100 - row.amount),
-          dstIdealAmount: row => (dstTargetTotal * row.srcTargetRate) / 100,
-          dstCurrentRate: row =>
-            (row.amount + row.dstAdjust) / row.dstIdealAmount,
-        })
-        .dropSeries(['amount', 'targetRate']);
-      let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
-      this.smashFractionRecursively(fraction);
+      // selling mode
+      this.workDf = this.workDf.generateSeries({
+        dstAdjust: row =>
+          Math.trunc(
+            (dstTargetTotal * row.srcTargetRate) / 100 - row.srcAmount
+          ),
+        dstDeviation: row =>
+          (row.srcAmount + row.dstAdjust) / row.dstIdealAmount,
+      });
     }
 
-    console.error(this.workDf.toArray());
+    let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
+    this.smashFractionRecursively(fraction);
+
+    this.workDf = this.workDf.generateSeries({
+      dstAmount: row => row.srcAmount + row.dstAdjust,
+    });
+
+    /*
+     final `this.workDf` will be as follows:
+     {
+        id: 1,
+        srcTargetRate: 20,
+        srcAmount: 250,
+        srcIdealAmount: 230,
+        srcDeviation: 1.0869565217391304,
+        dstAdjust: 61,
+        dstAmount: 311,
+        dstIdealAmount: 310.8,
+        dstDeviation: 1.0006435006435006,
+      }
+    */
 
     const result = this.workDf.toArray().map(_ => ({
       id: _.id,
