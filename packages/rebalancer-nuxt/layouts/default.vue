@@ -11,10 +11,37 @@
 import Navbar from '~/components/Navbar';
 import firebase from '~/assets/js/firebase';
 
+const db = firebase.firestore();
+
 export default {
   components: { Navbar },
   async mounted() {
-    await firebase.auth().signInAnonymously();
+    // when firebase auth is ready
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        // User is signed in. (including anonymous user)
+      } else {
+        // No user is signed in.
+        await firebase.auth().signInAnonymously();
+      }
+
+      // update `state.portfolios` everytime firebase value changes
+      db.collection('portfolios')
+        .where('owner', '==', user.uid)
+        .onSnapshot(snapshot => {
+          const portfolios = snapshot.docs.map(_ => {
+            return {
+              id: _.id,
+              ..._.data(),
+            };
+          });
+
+          this.$store.commit({
+            type: 'setPortfolios',
+            portfolios,
+          });
+        });
+    });
   },
 };
 </script>

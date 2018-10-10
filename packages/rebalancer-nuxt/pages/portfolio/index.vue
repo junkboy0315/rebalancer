@@ -18,27 +18,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import PortfolioCard from '~/components/PortfolioCard';
-import firebase from '~/assets/js/firebase';
-
-const db = firebase.firestore();
 
 export default {
-  mounted() {
-    firebase.auth().onAuthStateChanged(async user => {
-      const portfolios = await db
-        .collection('portfolios')
-        .where('owner', '==', user.uid)
-        .get();
-
-      this.portfolios = portfolios.docs;
-    });
-  },
   components: { PortfolioCard },
-  data() {
-    return {
-      portfolios: [],
-    };
+  computed: {
+    ...mapState(['portfolios']),
   },
 };
 </script>

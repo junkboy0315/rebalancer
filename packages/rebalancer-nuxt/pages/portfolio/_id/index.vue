@@ -4,19 +4,21 @@
       <h1>Portfolio > Portfolio1</h1>
       <nuxt-link :to="this.$route.params.id + '/rebalance'" class="button is-primary">リバランスを実行する</nuxt-link>
     </div>
-    <AssetClassCard
-      v-for="assetClass in portfolio.assetClasses"
-      :key="assetClass.id"
-      :assetClass="assetClass"
-      :onAssetClassDelete="deleteAssetClass"
-      :onTargetRateChange="changeTargetRate"
-      :onAddAsset="addAsset"
-      :onAssetDelete="deleteAsset"
-      :onAssetClassNameChange="onAssetClassNameChange"
-      :onAssetNameChange="onAssetNameChange"
-      :onAssetAmountChange="onAssetAmountChange"
-      class="asset-class-card"
-    />
+    <template v-if="portfolio">
+      <AssetClassCard
+        v-for="assetClass in portfolio.assetClasses"
+        :key="assetClass.id"
+        :assetClass="assetClass"
+        :onAssetClassDelete="deleteAssetClass"
+        :onTargetRateChange="changeTargetRate"
+        :onAddAsset="addAsset"
+        :onAssetDelete="deleteAsset"
+        :onAssetClassNameChange="onAssetClassNameChange"
+        :onAssetNameChange="onAssetNameChange"
+        :onAssetAmountChange="onAssetAmountChange"
+        class="asset-class-card"
+      />
+    </template>
     <AssetClassCardNew @click.native="addAssetClass"/>
   </section>
 </template>
@@ -34,17 +36,10 @@ export default {
     AssetClassCard,
     AssetClassCardNew,
   },
-  mounted() {
-    firebase.auth().onAuthStateChanged(async user => {
-      db.doc(`portfolios/${this.$route.params.id}`).onSnapshot(
-        doc => (this.portfolio = doc.data())
-      );
-    });
-  },
-  data() {
-    return {
-      portfolio: {},
-    };
+  computed: {
+    portfolio() {
+      return this.$store.getters.portfolioById(this.$route.params.id);
+    },
   },
   methods: {
     async addAssetClass() {
@@ -82,7 +77,6 @@ export default {
         });
     },
     async addAsset(id) {
-      console.log(id);
       const newAsset = {
         id: uuid(),
         name: 'new asset',
