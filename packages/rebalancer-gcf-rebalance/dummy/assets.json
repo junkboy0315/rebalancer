@@ -1,8 +1,33 @@
-{
-  "assets": [
-    { "id": 1, "amount": 250, "targetRate": 20 },
-    { "id": 2, "amount": 200, "targetRate": 20 },
-    { "id": 3, "amount": 300, "targetRate": 20 },
-    { "id": 4, "amount": 400, "targetRate": 40 }
-  ]
-}
+[
+  {
+    "assets": [
+      { "id": 1, "amount": 250, "targetRate": 20 },
+      { "id": 2, "amount": 200, "targetRate": 20 },
+      { "id": 3, "amount": 300, "targetRate": 20 },
+      { "id": 4, "amount": 400, "targetRate": 40 }
+    ],
+    "adjust": 100,
+    "mode": "nosell"
+  },
+  {
+    "assets": [
+      {
+        "id": "9fff248d-3a7e-4a72-a554-e360da112eae",
+        "amount": 6888,
+        "targetRate": 10
+      },
+      {
+        "id": "1741e20c-b1d5-44aa-a425-f75e16ec385b",
+        "amount": 2566,
+        "targetRate": 90
+      },
+      {
+        "id": "896cd86f-1c44-495b-b67b-6ae7e7884870",
+        "amount": 5584,
+        "targetRate": 34
+      }
+    ],
+    "adjust": 0,
+    "mode": "sell"
+  }
+]
