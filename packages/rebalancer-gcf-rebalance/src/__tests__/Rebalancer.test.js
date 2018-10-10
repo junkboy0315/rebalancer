@@ -459,6 +459,26 @@ describe('Rebalancer', () => {
         rebalancer = new Rebalancer(assets);
         rebalancer.rebalance('not integer');
       },
+      () => {
+        // target rate contains minus value
+        const invalidAssets = [
+          { id: 1, amount: 250, targetRate: 20 },
+          { id: 2, amount: 200, targetRate: -20 },
+          { id: 3, amount: 300, targetRate: 40 },
+          { id: 4, amount: 400, targetRate: 60 },
+        ];
+        rebalancer = new Rebalancer(invalidAssets);
+      },
+      () => {
+        // total targetRate is not 100
+        const invalidAssets = [
+          { id: 1, amount: 250, targetRate: 10 },
+          { id: 2, amount: 200, targetRate: 20 },
+          { id: 3, amount: 300, targetRate: 30 },
+          { id: 4, amount: 400, targetRate: 30 },
+        ];
+        rebalancer = new Rebalancer(invalidAssets);
+      },
     ];
     tests.forEach(test => {
       expect(test).toThrow();

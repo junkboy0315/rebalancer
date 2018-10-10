@@ -7,6 +7,10 @@ export default class Rebalancer {
    */
   constructor(assets) {
     if (!assets) throw Error('assets is not provided');
+    if (assets.find(_ => _.targetRate < 0))
+      throw Error('target rate must be positive value');
+    if (assets.reduce((acc, next) => acc + next.targetRate, 0) !== 100)
+      throw Error('sum of target rates must be 100');
     this.df = new DataFrame(assets);
   }
 
