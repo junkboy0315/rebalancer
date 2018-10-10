@@ -62,6 +62,7 @@ export default {
     const payload = {
       assets: this.assets,
       adjust: +this.$route.query.adjust,
+      mode: this.$route.query.rebalanceType,
     };
     const result = await this.$axios.$post(
       'https://us-central1-rebalancer-218123.cloudfunctions.net/rebalance',
