@@ -33,3 +33,6 @@ paths:
                         type: integer
                 adjust:
                   type: integer
+                mode:
+                  type: string
+                  enum: [sell, nosell]

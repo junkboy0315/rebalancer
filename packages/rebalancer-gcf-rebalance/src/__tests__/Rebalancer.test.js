@@ -302,6 +302,150 @@ describe('Rebalancer', () => {
     expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
   });
 
+  it('can rebalance +53 (sell mode)', () => {
+    const expectedWorkDf = [
+      {
+        id: 1,
+        srcAmount: 250,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 1.0869565217391304,
+        dstAdjust: -9,
+        dstIdealAmount: 240.8,
+        dstCurrentRate: 1.0008305647840532,
+      },
+      {
+        id: 2,
+        srcAmount: 200,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 0.8695652173913043,
+        dstAdjust: 41,
+        dstIdealAmount: 240.8,
+        dstCurrentRate: 1.0008305647840532,
+      },
+      {
+        id: 3,
+        srcAmount: 300,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 1.3043478260869565,
+        dstAdjust: -59,
+        dstIdealAmount: 240.8,
+        dstCurrentRate: 1.0008305647840532,
+      },
+      {
+        id: 4,
+        srcAmount: 400,
+        srcTargetRate: 40,
+        srcIdealAmount: 460,
+        srcCurrentRate: 0.8695652173913043,
+        dstAdjust: 81,
+        dstIdealAmount: 481.6,
+        dstCurrentRate: 0.9987541528239202,
+      },
+    ];
+
+    rebalancer.rebalance(54, 'sell');
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
+  });
+
+  it('can rebalance -304 (sell mode)', () => {
+    const expectedWorkDf = [
+      {
+        id: 1,
+        srcAmount: 250,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 1.0869565217391304,
+        dstAdjust: -81,
+        dstIdealAmount: 169.2,
+        dstCurrentRate: 0.9988179669030733,
+      },
+      {
+        id: 2,
+        srcAmount: 200,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 0.8695652173913043,
+        dstAdjust: -31,
+        dstIdealAmount: 169.2,
+        dstCurrentRate: 0.9988179669030733,
+      },
+      {
+        id: 3,
+        srcAmount: 300,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 1.3043478260869565,
+        dstAdjust: -131,
+        dstIdealAmount: 169.2,
+        dstCurrentRate: 0.9988179669030733,
+      },
+      {
+        id: 4,
+        srcAmount: 400,
+        srcTargetRate: 40,
+        srcIdealAmount: 460,
+        srcCurrentRate: 0.8695652173913043,
+        dstAdjust: -61,
+        dstIdealAmount: 338.4,
+        dstCurrentRate: 1.00177304964539,
+      },
+    ];
+
+    rebalancer.rebalance(-304, 'sell');
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
+  });
+
+  it('can rebalance +404 (sell mode)', () => {
+    const expectedWorkDf = [
+      {
+        id: 1,
+        srcAmount: 250,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 1.0869565217391304,
+        dstAdjust: 61,
+        dstIdealAmount: 310.8,
+        dstCurrentRate: 1.0006435006435006,
+      },
+      {
+        id: 2,
+        srcAmount: 200,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 0.8695652173913043,
+        dstAdjust: 111,
+        dstIdealAmount: 310.8,
+        dstCurrentRate: 1.0006435006435006,
+      },
+      {
+        id: 3,
+        srcAmount: 300,
+        srcTargetRate: 20,
+        srcIdealAmount: 230,
+        srcCurrentRate: 1.3043478260869565,
+        dstAdjust: 11,
+        dstIdealAmount: 310.8,
+        dstCurrentRate: 1.0006435006435006,
+      },
+      {
+        id: 4,
+        srcAmount: 400,
+        srcTargetRate: 40,
+        srcIdealAmount: 460,
+        srcCurrentRate: 0.8695652173913043,
+        dstAdjust: 221,
+        dstIdealAmount: 621.6,
+        dstCurrentRate: 0.999034749034749,
+      },
+    ];
+
+    rebalancer.rebalance(404, 'sell');
+    expect(rebalancer.workDf.toArray()).toEqual(expectedWorkDf);
+  });
+
   it('throw error when adjustment exceed the current total', () => {
     const tests = [
       () => {

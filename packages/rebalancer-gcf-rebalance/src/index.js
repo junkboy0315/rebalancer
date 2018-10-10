@@ -13,11 +13,11 @@ import Rebalancer from './Rebalancer';
 const rebalance = (req, res) => {
   cors()(req, res, () => {
     if (req.method !== 'POST') return res.sendStatus(404);
-    const { assets, adjust } = req.body;
+    const { assets, adjust, mode } = req.body;
 
     try {
       const rebalancer = new Rebalancer(assets);
-      const result = rebalancer.rebalance(adjust);
+      const result = rebalancer.rebalance(adjust, mode);
       res.send(result);
     } catch (err) {
       res.status(400).send(err.message);

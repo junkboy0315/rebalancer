@@ -145,38 +145,60 @@ export default class Rebalancer {
   /**
    *
    * @param {number} adjustAmount
+   * @param {string} mode `sell` or `nosell`.
    * @returns {{id: number, amount: number, adjust: number}}
    */
-  rebalance(adjustAmount) {
-    if (!adjustAmount || !Number.isInteger(adjustAmount))
+  rebalance(adjustAmount, mode = 'nosell') {
+    if (!Number.isInteger(adjustAmount))
       throw Error('adjust amount is invalid');
 
-    this.srcCurrentTotal = this.df.getSeries('amount').sum();
-    this.dstTargetTotal = this.df
-      .deflate(row => row.amount * (100 / row.targetRate))
-      .max();
+    const srcCurrentTotal = this.df.getSeries('amount').sum();
 
-    this.workDf = this.df
-      .generateSeries({
-        srcAmount: row => row.amount,
-        srcTargetRate: row => row.targetRate,
-        srcIdealAmount: row => (this.srcCurrentTotal * row.targetRate) / 100,
-        srcCurrentRate: row => row.amount / row.srcIdealAmount,
-        dstAdjust: () => 0,
-        dstIdealAmount: row => (this.dstTargetTotal * row.srcTargetRate) / 100,
-        dstCurrentRate: row => row.amount / row.dstIdealAmount,
-      })
-      .dropSeries(['amount', 'targetRate']);
-
-    if (adjustAmount < 0 && Math.abs(adjustAmount) > this.srcCurrentTotal) {
+    if (adjustAmount < 0 && Math.abs(adjustAmount) > srcCurrentTotal) {
       throw Error(
         'The minus adjustment amount must be less than current total'
       );
     }
 
-    this.fillGapRecursively(adjustAmount);
-    let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
-    this.smashFractionRecursively(fraction);
+    if (mode === 'nosell') {
+      const dstTargetTotal = this.df
+        .deflate(row => row.amount * (100 / row.targetRate))
+        .max();
+
+      this.workDf = this.df
+        .generateSeries({
+          srcAmount: row => row.amount,
+          srcTargetRate: row => row.targetRate,
+          srcIdealAmount: row => (srcCurrentTotal * row.targetRate) / 100,
+          srcCurrentRate: row => row.amount / row.srcIdealAmount,
+          dstAdjust: () => 0,
+          dstIdealAmount: row => (dstTargetTotal * row.srcTargetRate) / 100,
+          dstCurrentRate: row => row.amount / row.dstIdealAmount,
+        })
+        .dropSeries(['amount', 'targetRate']);
+
+      this.fillGapRecursively(adjustAmount);
+      let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
+      this.smashFractionRecursively(fraction);
+    } else {
+      const dstTargetTotal = srcCurrentTotal + adjustAmount;
+
+      this.workDf = this.df
+        .generateSeries({
+          srcAmount: row => row.amount,
+          srcTargetRate: row => row.targetRate,
+          srcIdealAmount: row => (srcCurrentTotal * row.targetRate) / 100,
+          srcCurrentRate: row => row.amount / row.srcIdealAmount,
+          dstAdjust: row =>
+            Math.trunc((dstTargetTotal * row.srcTargetRate) / 100 - row.amount),
+          dstIdealAmount: row => (dstTargetTotal * row.srcTargetRate) / 100,
+          dstCurrentRate: row =>
+            (row.amount + row.dstAdjust) / row.dstIdealAmount,
+        })
+        .dropSeries(['amount', 'targetRate']);
+      let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
+      this.smashFractionRecursively(fraction);
+    }
 
     const result = this.workDf.toArray().map(_ => ({
       id: _.id,
