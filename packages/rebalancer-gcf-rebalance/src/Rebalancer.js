@@ -165,9 +165,7 @@ export default class Rebalancer {
     }
 
     if (mode === 'nosell') {
-      const dstTargetTotal = this.df
-        .deflate(row => row.amount * (100 / row.targetRate))
-        .max();
+      const dstTargetTotal = srcCurrentTotal + adjustAmount;
 
       this.workDf = this.df
         .generateSeries({
@@ -203,6 +201,8 @@ export default class Rebalancer {
       let fraction = adjustAmount - this.workDf.getSeries('dstAdjust').sum();
       this.smashFractionRecursively(fraction);
     }
+
+    console.error(this.workDf.toArray());
 
     const result = this.workDf.toArray().map(_ => ({
       id: _.id,
