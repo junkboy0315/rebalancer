@@ -2,6 +2,7 @@
 <script>
 import VueCharts from 'vue-chartjs';
 import { Pie } from 'vue-chartjs';
+import { getCommaNumber } from '~/utils';
 
 export default {
   extends: Pie,
@@ -23,7 +24,8 @@ export default {
           label: function(tooltipItem, data) {
             const { datasetIndex, index } = tooltipItem;
             const label = data.labels[index];
-            return label;
+            const value = data.datasets[datasetIndex].data[index];
+            return `${label}: ${getCommaNumber(value)}`;
           },
         },
       },
