@@ -6,9 +6,8 @@
       </div>
       <div class="contents-column">
         <div class="portfolio-title">{{ portfolio.name }}</div>
-        <PortfolioCardLiner title="総額" value="1,358,000円"/>
-        <PortfolioCardLiner title="乖離度" value="低い"/>
-        <PortfolioCardLiner title="アセットクラス数" value="3"/>
+        <PortfolioCardLiner title="総額" :value="total + '円'"/>
+        <PortfolioCardLiner title="アセットクラス数" :value="numberOfAssetClass"/>
       </div>
     </div>
   </nuxt-link>
@@ -20,6 +19,18 @@ import PortfolioCardLiner from '~/components/PortfolioCardLiner';
 export default {
   props: { portfolio: { type: Object, required: true } },
   components: { PortfolioCardLiner },
+  computed: {
+    total() {
+      const totalsOfEachAssetClass = this.portfolio.assetClasses.map(_ =>
+        _.assets.reduce((acc, next) => acc + next.amount, 0)
+      );
+      const total = totalsOfEachAssetClass.reduce((acc, next) => acc + next, 0);
+      return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
+    numberOfAssetClass() {
+      return this.portfolio.assetClasses.length;
+    },
+  },
 };
 </script>
 

@@ -28,12 +28,8 @@
         >%
       </div>
       <div class="level-item current-total">
-        <label>現在の評価額:</label>
-        123,344円
-      </div>
-      <div class="level-item current-deviation">
-        <label>目標との乖離:</label>
-        123,344円
+        <label>評価額:</label>
+        {{ totalAmount }}円
       </div>
       <div class="level-item icon" @click="onAssetClassDelete(assetClass.id)">
         <i class="fas fa-trash"></i>
@@ -106,6 +102,15 @@ export default {
     return {
       isTitleEditMode: false,
     };
+  },
+  computed: {
+    totalAmount() {
+      const amount = this.assetClass.assets.reduce(
+        (acc, next) => acc + next.amount,
+        0
+      );
+      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
   },
   methods: {
     _onAssetClassNameChange() {
