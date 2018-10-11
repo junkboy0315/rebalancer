@@ -1,7 +1,16 @@
 <template>
   <section class="portfolio">
     <div class="top-line">
-      <h1>Portfolio > Portfolio1</h1>
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <nuxt-link to="/portfolio">Portfolio</nuxt-link>
+          </li>
+          <li class="is-active">
+            <a href="#">{{portfolio && portfolio.name}}</a>
+          </li>
+        </ul>
+      </nav>
       <nuxt-link
         :to="this.$route.params.id + '/rebalance'"
         :disabled="hasErrors"
@@ -202,6 +211,14 @@ export default {
   .top-line {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .breadcrumb {
+      margin-bottom: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
   }
 
   .asset-class-card {

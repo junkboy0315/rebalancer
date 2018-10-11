@@ -1,6 +1,20 @@
 <template>
   <section class="portfolio">
-    <h1>Portfolio > Portfolio1 > Rebalance</h1>
+    <div class="top-line">
+      <nav v-if="portfolio" class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <nuxt-link to="/portfolio">Portfolio</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link :to="`/portfolio/${portfolio.id}`">{{portfolio.name}}</nuxt-link>
+          </li>
+          <li class="is-active">
+            <a href="#">Rebalance Settings</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <div class="card">
       <div class="liner">
         <div class="has-text-weight-bold">追加投資額（売却額）</div>
@@ -38,6 +52,11 @@ export default {
       rebalanceType: 'nosell',
     };
   },
+  computed: {
+    portfolio() {
+      return this.$store.getters.portfolioById(this.$route.params.id);
+    },
+  },
 };
 </script>
 
@@ -46,6 +65,13 @@ export default {
   .top-line {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 16px;
+
+    .breadcrumb {
+      margin-bottom: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
   }
 
   .asset-class-card {
