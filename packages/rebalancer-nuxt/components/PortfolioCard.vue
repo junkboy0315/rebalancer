@@ -15,6 +15,7 @@
 
 <script>
 import PortfolioCardLiner from '~/components/PortfolioCardLiner';
+import { getCommaNumber } from '~/utils';
 
 export default {
   props: { portfolio: { type: Object, required: true } },
@@ -25,7 +26,7 @@ export default {
         _.assets.reduce((acc, next) => acc + next.amount, 0)
       );
       const total = totalsOfEachAssetClass.reduce((acc, next) => acc + next, 0);
-      return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return getCommaNumber(total);
     },
     numberOfAssetClass() {
       return this.portfolio.assetClasses.length;

@@ -55,6 +55,7 @@ import Divider from './Divider';
 import AssetLiner from './AssetLiner';
 import AssetLinerNew from './AssetLinerNew';
 import firebase from '~/assets/js/firebase';
+import { getCommaNumber } from '~/utils';
 
 const db = firebase.firestore();
 
@@ -109,7 +110,7 @@ export default {
         (acc, next) => acc + next.amount,
         0
       );
-      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return getCommaNumber(amount);
     },
   },
   methods: {

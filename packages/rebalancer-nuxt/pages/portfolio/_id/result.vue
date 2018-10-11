@@ -7,7 +7,7 @@
     <div class="card">
       <div class="my-container">
         <div class="has-text-weight-bold">リバランスの概要</div>
-        <div>今回の投資額: {{ this.$route.query.adjust }}円</div>
+        <div>今回の投資額: {{ getCommaNumber(this.$route.query.adjust) }}円</div>
         <div>リバランス方針: ノーセルリバランス</div>
       </div>
       <Divider/>
@@ -16,7 +16,7 @@
         <div
           v-for="asset in mergedResult"
           :key="asset.id"
-        >{{asset.name}}: {{asset.adjust}}円の購入を行ってください</div>
+        >{{asset.name}}: {{ getCommaNumber(asset.dstAdjust) }}円の購入を行ってください</div>
       </div>
       <Divider/>
       <div v-if="calcResult.length > 0" class="my-container">
@@ -47,6 +47,7 @@
 import Divider from '~/components/Divider';
 import firebase from '~/assets/js/firebase';
 import MyChart from '~/components/MyChart';
+import { getCommaNumber } from '~/utils';
 
 const db = firebase.firestore();
 
@@ -100,6 +101,11 @@ export default {
           targetRate: originalData.targetRate,
         };
       });
+    },
+  },
+  methods: {
+    getCommaNumber(num) {
+      return getCommaNumber(num);
     },
   },
   data() {
