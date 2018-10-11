@@ -1,8 +1,10 @@
 <template>
   <div>
     <Navbar/>
-    <div class="container child-contents">
-      <nuxt/>
+    <div class="container">
+      <div class="section">
+        <nuxt/>
+      </div>
     </div>
   </div>
 </template>
@@ -47,13 +49,9 @@ export default {
 </script>
 
 <style lang="scss">
-.child-contents {
-  padding: 50px 16px 0;
-
-  h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 </style>
