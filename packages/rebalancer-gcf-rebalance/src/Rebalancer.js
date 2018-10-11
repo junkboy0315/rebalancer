@@ -195,6 +195,8 @@ export default class Rebalancer {
 
     this.workDf = this.workDf.generateSeries({
       dstAmount: row => row.srcAmount + row.dstAdjust,
+      srcCurrentRate: row => row.srcAmount / srcCurrentTotal,
+      dstCurrentRate: row => row.dstAmount / dstTargetTotal,
     });
 
     /*
@@ -202,12 +204,17 @@ export default class Rebalancer {
      {
         id: 1,
         targetRate: 20,
-        srcAmount: 250,
+
         srcIdealAmount: 230,
+        srcAmount: 250,
+        srcCurrentRate: 0.21739130434782608,
         srcDeviation: 1.0869565217391304,
+
         dstAdjust: 61,
-        dstAmount: 311,
+
         dstIdealAmount: 310.8,
+        dstAmount: 311,
+        dstCurrentRate: 0.1948148148148148,
         dstDeviation: 1.0006435006435006,
       }
 
