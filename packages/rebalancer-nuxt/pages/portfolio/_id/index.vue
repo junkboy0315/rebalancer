@@ -17,11 +17,34 @@
         class="button is-primary"
       >リバランスを実行する</nuxt-link>
     </div>
+    <!-- errors -->
     <div v-if="errors.length > 0" class="notification is-warning">
       <ul>
         <li v-for="error in errors" :key="error">- {{error}}</li>
       </ul>
     </div>
+    <!-- portfolio summary -->
+    <h2>ポートフォリオ概要</h2>
+    <div class="card">
+      <div class="card-content">
+        <div class="level">
+          <div class="level-left">
+            <div>名称：</div>
+            <input
+              @change="onPortfolioTitleChange($event.target.value)"
+              :class="{'is-static': !isEditModeOfPortfolioTitle}"
+              class="input"
+              :style="{width:'20rem'}"
+              :value="portfolio && portfolio.name"
+            >
+          </div>
+        </div>
+        <div>評価額：{{total}}円</div>
+        <button @click="onPortfolioDelete(portfolio.id)" class="button is-danger">ポートフォリオを削除</button>
+      </div>
+    </div>
+    <!-- asset classes -->
+    <h2>アセットクラス</h2>
     <template v-if="portfolio">
       <AssetClassCard
         v-for="assetClass in portfolio.assetClasses"
@@ -46,6 +69,7 @@ import uuid from 'uuid/v4';
 import AssetClassCard from '~/components/AssetClassCard';
 import AssetClassCardNew from '~/components/AssetClassCardNew';
 import firebase from '~/assets/js/firebase';
+import { getCommaNumber } from '~/utils';
 
 const db = firebase.firestore();
 
@@ -57,6 +81,17 @@ export default {
   computed: {
     portfolio() {
       return this.$store.getters.portfolioById(this.$route.params.id);
+    },
+    total() {
+      if (!this.portfolio) return 0;
+      const totalsOfEachAssetClass = this.portfolio.assetClasses.map(_ =>
+        _.assets.reduce((acc, next) => acc + next.amount, 0)
+      );
+      const total = totalsOfEachAssetClass.reduce((acc, next) => acc + next, 0);
+      return getCommaNumber(total);
+    },
+    numberOfAssetClass() {
+      return this.portfolio.assetClasses.length;
     },
     hasErrors() {
       return this.errors.length > 0;
@@ -202,12 +237,40 @@ export default {
           }),
         });
     },
+    async onPortfolioDelete(portfolioId) {
+      await db
+        .collection('portfolios')
+        .doc(portfolioId)
+        .delete();
+
+      this.$router.push('/portfolio');
+    },
+    async onPortfolioTitleChange(name) {
+      await db
+        .collection('portfolios')
+        .doc(this.portfolio.id)
+        .update({
+          name,
+        });
+    },
+  },
+  data() {
+    return {
+      isEditModeOfPortfolioTitle: false,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .portfolio {
+  h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
   .top-line {
     display: flex;
     justify-content: space-between;
