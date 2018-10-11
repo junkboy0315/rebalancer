@@ -13,6 +13,7 @@
       <Divider/>
       <!-- result -->
       <template v-if="mergedResult.length > 0">
+        <!-- 試算結果 -->
         <div class="my-container">
           <div class="has-text-weight-bold">試算結果</div>
           <div
@@ -21,14 +22,15 @@
           >{{asset.name}}: {{ getCommaNumber(asset.dstAdjust) }}円の購入を行ってください</div>
         </div>
         <Divider/>
-        <div v-if="calcResult.length > 0" class="my-container">
+        <!-- リバランス前後のポートフォリオ -->
+        <div class="my-container">
           <div class="has-text-weight-bold">リバランス前後のポートフォリオ</div>
           <div class="is-flex">
             <div>
               <div>リバランス前</div>
               <div class="chart-container">
                 <MyChart
-                  :labels="mergedResult.map(_=>_.name)"
+                  :labels="mergedResult.map(_=> `${_.name}: ${getCommaNumber(_.srcAmount)}`)"
                   :data="mergedResult.map(_=>_.srcAmount)"
                 />
               </div>
@@ -37,12 +39,48 @@
               <div>リバランス後</div>
               <div class="chart-container">
                 <MyChart
-                  :labels="mergedResult.map(_=>_.name)"
+                  :labels="mergedResult.map(_=> `${_.name}: ${getCommaNumber(_.dstAmount)}`)"
                   :data="mergedResult.map(_=>_.dstAmount)"
                 />
               </div>
             </div>
           </div>
+        </div>
+        <Divider/>
+        <!-- 表 -->
+        <div class="my-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Asset Class</th>
+                <th>Target</th>
+                <th>調整額</th>
+                <th class="has-text-centered">金額
+                  <br>（前）
+                </th>
+                <th class="has-text-centered">金額
+                  <br>（後）
+                </th>
+                <th class="has-text-centered">乖離
+                  <br>（前）
+                </th>
+                <th class="has-text-centered">乖離
+                  <br>（後）
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="res in mergedResult" :key="res.key">
+                <td>{{res.name}}</td>
+                <td class="has-text-centered">{{res.targetRate}}%</td>
+                <td class="has-text-right">{{getCommaNumber(res.dstAdjust)}}</td>
+                <td class="has-text-right">{{getCommaNumber(res.srcAmount)}}</td>
+                <td class="has-text-right">{{getCommaNumber(res.dstAmount)}}</td>
+                <td class="has-text-right">{{getFormatedPercentage(1-res.srcDeviation)}}%</td>
+                <td class="has-text-right">{{getFormatedPercentage(1-res.dstDeviation)}}%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </template>
       <!-- loading -->
@@ -61,7 +99,7 @@ import Spinner from '~/components/Spinner';
 import Divider from '~/components/Divider';
 import firebase from '~/assets/js/firebase';
 import MyChart from '~/components/MyChart';
-import { getCommaNumber } from '~/utils';
+import { getCommaNumber, getFormatedPercentage } from '~/utils';
 
 const db = firebase.firestore();
 
@@ -117,6 +155,9 @@ export default {
     getCommaNumber(num) {
       return getCommaNumber(num);
     },
+    getFormatedPercentage(num) {
+      return getFormatedPercentage(num);
+    },
   },
   data() {
     return {
@@ -141,6 +182,7 @@ export default {
 
 .my-container {
   padding: 32px;
+  overflow-x: auto;
 
   .chart-container {
     max-width: 300px;

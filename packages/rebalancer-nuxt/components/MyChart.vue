@@ -7,8 +7,6 @@ export default {
   extends: Pie,
   props: ['data', 'labels'],
   mounted() {
-    console.log(this.data, this.labels);
-    // Overwriting base render method with actual data.
     const data = {
       labels: this.labels,
       datasets: [
@@ -24,11 +22,7 @@ export default {
         callbacks: {
           label: function(tooltipItem, data) {
             const { datasetIndex, index } = tooltipItem;
-            const title = data.labels[index];
-            const value = data.datasets[datasetIndex].data[index];
-
-            var label = `${title}: ${value}%`;
-
+            const label = data.labels[index];
             return label;
           },
         },
