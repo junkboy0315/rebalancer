@@ -11,42 +11,53 @@
         <div>リバランス方針: ノーセルリバランス</div>
       </div>
       <Divider/>
-      <div class="my-container">
-        <div class="has-text-weight-bold">試算結果</div>
-        <div
-          v-for="asset in mergedResult"
-          :key="asset.id"
-        >{{asset.name}}: {{ getCommaNumber(asset.dstAdjust) }}円の購入を行ってください</div>
-      </div>
-      <Divider/>
-      <div v-if="calcResult.length > 0" class="my-container">
-        <div class="has-text-weight-bold">リバランス前後のポートフォリオ</div>
-        <div class="is-flex">
-          <div>
-            <div>リバランス前</div>
-            <div class="chart-container">
-              <MyChart
-                :labels="mergedResult.map(_=>_.name)"
-                :data="mergedResult.map(_=>_.srcAmount)"
-              />
+      <!-- result -->
+      <template v-if="mergedResult.length > 0">
+        <div class="my-container">
+          <div class="has-text-weight-bold">試算結果</div>
+          <div
+            v-for="asset in mergedResult"
+            :key="asset.id"
+          >{{asset.name}}: {{ getCommaNumber(asset.dstAdjust) }}円の購入を行ってください</div>
+        </div>
+        <Divider/>
+        <div v-if="calcResult.length > 0" class="my-container">
+          <div class="has-text-weight-bold">リバランス前後のポートフォリオ</div>
+          <div class="is-flex">
+            <div>
+              <div>リバランス前</div>
+              <div class="chart-container">
+                <MyChart
+                  :labels="mergedResult.map(_=>_.name)"
+                  :data="mergedResult.map(_=>_.srcAmount)"
+                />
+              </div>
             </div>
-          </div>
-          <div>
-            <div>リバランス後</div>
-            <div class="chart-container">
-              <MyChart
-                :labels="mergedResult.map(_=>_.name)"
-                :data="mergedResult.map(_=>_.dstAmount)"
-              />
+            <div>
+              <div>リバランス後</div>
+              <div class="chart-container">
+                <MyChart
+                  :labels="mergedResult.map(_=>_.name)"
+                  :data="mergedResult.map(_=>_.dstAmount)"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </template>
+      <!-- loading -->
+      <template v-if="!(mergedResult.length > 0)">
+        <div class="my-container spinner">
+          <Spinner background="#d84f00"/>
+          <span>Loading...</span>
+        </div>
+      </template>
     </div>
   </section>
 </template>
 
 <script>
+import Spinner from '~/components/Spinner';
 import Divider from '~/components/Divider';
 import firebase from '~/assets/js/firebase';
 import MyChart from '~/components/MyChart';
@@ -56,6 +67,7 @@ const db = firebase.firestore();
 
 export default {
   components: {
+    Spinner,
     Divider,
     MyChart,
   },
@@ -133,5 +145,9 @@ export default {
   .chart-container {
     max-width: 300px;
   }
+}
+
+.spinner span {
+  margin-left: 1rem;
 }
 </style>
