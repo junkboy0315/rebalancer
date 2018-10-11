@@ -20,7 +20,7 @@
       <div class="my-container">
         <div class="has-text-weight-bold">リバランスの概要</div>
         <div>今回の投資額: {{ getCommaNumber(this.$route.query.adjust) }}円</div>
-        <div>リバランス方針: ノーセルリバランス</div>
+        <div>リバランス方針: {{ rebalanceModeName }}</div>
       </div>
       <Divider/>
       <!-- result -->
@@ -152,6 +152,11 @@ export default {
     },
     total() {
       return this.assets.reduce((acc, next) => acc + next.amount, 0);
+    },
+    rebalanceModeName() {
+      if (this.$route.query.rebalanceType === 'sell')
+        return 'セルリバランスモード';
+      else return 'ノーセルリバランスモード';
     },
   },
   methods: {
