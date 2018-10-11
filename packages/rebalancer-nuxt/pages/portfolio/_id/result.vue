@@ -25,7 +25,10 @@
           <div>
             <div>リバランス前</div>
             <div class="chart-container">
-              <MyChart :labels="mergedResult.map(_=>_.name)" :data="mergedResult.map(_=>_.amount)"/>
+              <MyChart
+                :labels="mergedResult.map(_=>_.name)"
+                :data="mergedResult.map(_=>_.srcAmount)"
+              />
             </div>
           </div>
           <div>
@@ -33,7 +36,7 @@
             <div class="chart-container">
               <MyChart
                 :labels="mergedResult.map(_=>_.name)"
-                :data="mergedResult.map(_=>_.amount + _.adjust)"
+                :data="mergedResult.map(_=>_.dstAmount)"
               />
             </div>
           </div>
@@ -93,12 +96,7 @@ export default {
         );
         return {
           ..._,
-          amount: originalData.assets.reduce(
-            (acc, next) => acc + next.amount,
-            0
-          ),
           name: originalData.name,
-          targetRate: originalData.targetRate,
         };
       });
     },
