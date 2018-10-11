@@ -18,7 +18,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -29,7 +29,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -40,7 +40,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -51,7 +51,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -70,7 +70,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -81,7 +81,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -92,7 +92,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -103,7 +103,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -122,7 +122,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -133,7 +133,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -144,7 +144,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -155,7 +155,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -174,7 +174,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -185,7 +185,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -196,7 +196,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -207,7 +207,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -226,7 +226,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -237,7 +237,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -248,7 +248,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -259,7 +259,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -278,7 +278,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -289,7 +289,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -300,7 +300,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -311,7 +311,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -330,7 +330,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -341,7 +341,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -352,7 +352,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -363,7 +363,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -382,7 +382,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -393,7 +393,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -404,7 +404,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -415,7 +415,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,
@@ -434,7 +434,7 @@ describe('Rebalancer', () => {
     const expectedWorkDf = [
       {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -445,7 +445,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 2,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 200,
         srcIdealAmount: 230,
         srcDeviation: 0.8695652173913043,
@@ -456,7 +456,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 3,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 300,
         srcIdealAmount: 230,
         srcDeviation: 1.3043478260869565,
@@ -467,7 +467,7 @@ describe('Rebalancer', () => {
       },
       {
         id: 4,
-        srcTargetRate: 40,
+        targetRate: 40,
         srcAmount: 400,
         srcIdealAmount: 460,
         srcDeviation: 0.8695652173913043,

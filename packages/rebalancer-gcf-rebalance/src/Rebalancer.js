@@ -14,7 +14,7 @@ export default class Rebalancer {
     this.df = new DataFrame(assets);
   }
 
-  // distribute `remaining` to the min(max) rate asset(s) at the rate of `srcTargetRate`
+  // distribute `remaining` to the min(max) rate asset(s) at the rate of `targetRate`
   scatter(remaining) {
     const rates = this.workDf
       .getSeries('dstDeviation')
@@ -31,14 +31,14 @@ export default class Rebalancer {
       [minOrMaxRate] = rates.reverse();
     }
 
-    const srcTargetRateSum = this.workDf
+    const targetRateSum = this.workDf
       .where(row => row.dstDeviation === minOrMaxRate)
-      .getSeries('srcTargetRate')
+      .getSeries('targetRate')
       .sum();
 
     this.workDf = this.workDf.select(row => {
       if (row.dstDeviation === minOrMaxRate) {
-        const rasio = row.srcTargetRate / srcTargetRateSum;
+        const rasio = row.targetRate / targetRateSum;
 
         row.dstAdjust += Math.trunc(remaining * rasio);
         row.dstDeviation = (row.srcAmount + row.dstAdjust) / row.dstIdealAmount;
@@ -167,28 +167,24 @@ export default class Rebalancer {
 
     this.workDf = this.df
       .generateSeries({
-        srcTargetRate: row => row.targetRate,
+        targetRate: row => row.targetRate,
         srcAmount: row => row.amount,
         srcIdealAmount: row => (srcCurrentTotal * row.targetRate) / 100,
         srcDeviation: row => row.amount / row.srcIdealAmount,
-        dstIdealAmount: row => (dstTargetTotal * row.srcTargetRate) / 100,
+        dstAdjust: () => 0,
+        dstIdealAmount: row => (dstTargetTotal * row.targetRate) / 100,
+        dstDeviation: row => row.srcAmount / row.dstIdealAmount,
       })
-      .dropSeries(['amount', 'targetRate']);
+      .dropSeries(['amount']);
 
     if (mode === 'nosell') {
       // no-selling mode
-      this.workDf = this.workDf.generateSeries({
-        dstAdjust: () => 0,
-        dstDeviation: row => row.srcAmount / row.dstIdealAmount,
-      });
       this.fillGapRecursively(adjustAmount);
     } else {
       // selling mode
       this.workDf = this.workDf.generateSeries({
         dstAdjust: row =>
-          Math.trunc(
-            (dstTargetTotal * row.srcTargetRate) / 100 - row.srcAmount
-          ),
+          Math.trunc((dstTargetTotal * row.targetRate) / 100 - row.srcAmount),
         dstDeviation: row =>
           (row.srcAmount + row.dstAdjust) / row.dstIdealAmount,
       });
@@ -205,7 +201,7 @@ export default class Rebalancer {
      final `this.workDf` will be as follows:
      {
         id: 1,
-        srcTargetRate: 20,
+        targetRate: 20,
         srcAmount: 250,
         srcIdealAmount: 230,
         srcDeviation: 1.0869565217391304,
@@ -214,12 +210,11 @@ export default class Rebalancer {
         dstIdealAmount: 310.8,
         dstDeviation: 1.0006435006435006,
       }
+
+      see: https://docs.google.com/spreadsheets/d/1i8K6RolFfeUpi7WhiaeZp5K62VsUczUG4WmKKwpeXuU
     */
 
-    const result = this.workDf.toArray().map(_ => ({
-      id: _.id,
-      adjust: _.dstAdjust,
-    }));
+    const result = this.workDf.toArray();
     return result;
   }
 }
