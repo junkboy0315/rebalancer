@@ -2,12 +2,14 @@
 <script>
 import VueCharts from 'vue-chartjs';
 import { Pie } from 'vue-chartjs';
-import { getCommaNumber } from '~/utils';
+import { getCommaNumber, getFormatedPercentage } from '~/utils';
 
 export default {
   extends: Pie,
-  props: ['data', 'labels'],
+  props: ['data', 'labels', 'labelsPct'],
   mounted() {
+    const that = this;
+
     const data = {
       labels: this.labels,
       datasets: [
@@ -25,7 +27,9 @@ export default {
             const { datasetIndex, index } = tooltipItem;
             const label = data.labels[index];
             const value = data.datasets[datasetIndex].data[index];
-            return `${label}: ${getCommaNumber(value)}`;
+            return `${label}: ${getCommaNumber(value)} (${getFormatedPercentage(
+              that.labelsPct[index]
+            )}%)`;
           },
         },
       },

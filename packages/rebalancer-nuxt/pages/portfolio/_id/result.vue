@@ -41,13 +41,21 @@
             <div>
               <div>リバランス前</div>
               <div class="chart-container">
-                <MyChart :labels="result.map(_=> _.name)" :data="result.map(_=>_.srcAmount)"/>
+                <MyChart
+                  :labels="result.map(_=> _.name)"
+                  :labelsPct="result.map(_=>_.srcCurrentRate)"
+                  :data="result.map(_=>_.srcAmount)"
+                />
               </div>
             </div>
             <div>
               <div>リバランス後</div>
               <div class="chart-container">
-                <MyChart :labels="result.map(_=> _.name)" :data="result.map(_=>_.dstAmount)"/>
+                <MyChart
+                  :labels="result.map(_=> _.name)"
+                  :labelsPct="result.map(_=>_.dstCurrentRate)"
+                  :data="result.map(_=>_.dstAmount)"
+                />
               </div>
             </div>
           </div>
@@ -67,6 +75,12 @@
                 <th class="has-text-centered">金額
                   <br>（後）
                 </th>
+                <th class="has-text-centered">比率
+                  <br>（前）
+                </th>
+                <th class="has-text-centered">比率
+                  <br>（後）
+                </th>
                 <th class="has-text-centered">乖離率
                   <br>（前）
                 </th>
@@ -82,6 +96,8 @@
                 <td class="has-text-right">{{getCommaNumber(res.dstAdjust)}}</td>
                 <td class="has-text-right">{{getCommaNumber(res.srcAmount)}}</td>
                 <td class="has-text-right">{{getCommaNumber(res.dstAmount)}}</td>
+                <td class="has-text-right">{{getFormatedPercentage(res.srcCurrentRate)}}%</td>
+                <td class="has-text-right">{{getFormatedPercentage(res.dstCurrentRate)}}%</td>
                 <td class="has-text-right">{{getFormatedPercentage(res.srcDeviation-1)}}%</td>
                 <td class="has-text-right">{{getFormatedPercentage(res.dstDeviation-1)}}%</td>
               </tr>
