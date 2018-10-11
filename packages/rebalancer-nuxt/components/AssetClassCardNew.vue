@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <a class="my-container">
-      <div>
+    <div class="my-container">
+      <div @click="$emit('click')" class="add-assetclass">
         <i class="fas fa-plus"></i>アセットクラスを追加する
       </div>
-    </a>
+    </div>
   </div>
 </template>
 
@@ -23,6 +23,10 @@ export default {};
 
   i {
     margin-right: 0.5rem;
+  }
+
+  .add-assetclass {
+    cursor: pointer;
   }
 }
 </style>

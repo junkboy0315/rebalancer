@@ -19,7 +19,7 @@
         class="asset-class-card"
       />
     </template>
-    <AssetClassCardNew @click.native="addAssetClass"/>
+    <AssetClassCardNew @click="addAssetClass"/>
   </section>
 </template>
 

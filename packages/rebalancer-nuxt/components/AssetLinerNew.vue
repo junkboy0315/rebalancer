@@ -1,6 +1,6 @@
 <template>
   <div class="my-container">
-    <div class="">
+    <div @click="$emit('click')" class="add-asset">
       <i class="fas fa-plus"></i>アセットを追加する
     </div>
   </div>
@@ -21,6 +21,10 @@ export default {};
 
   i {
     margin-right: 0.5rem;
+  }
+
+  .add-asset {
+    cursor: pointer;
   }
 }
 </style>

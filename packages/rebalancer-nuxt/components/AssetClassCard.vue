@@ -46,7 +46,7 @@
       />
       <Divider color="#ebeef5" :key="asset.id+'divider'"/>
     </template>
-    <AssetLinerNew @click.native="onAddAsset(assetClass.id)"/>
+    <AssetLinerNew @click="onAddAsset(assetClass.id)"/>
   </div>
 </template>
 
