@@ -1,5 +1,5 @@
 <template>
-  <section class="portfolio">
+  <section v-if="portfolio" class="portfolio">
     <div class="top-line">
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
@@ -24,12 +24,12 @@
       </div>
       <Divider/>
       <!-- result -->
-      <template v-if="mergedResult.length > 0">
+      <template v-if="result.length > 0">
         <!-- 試算結果 -->
         <div class="my-container">
           <div class="has-text-weight-bold">試算結果</div>
           <div
-            v-for="asset in mergedResult"
+            v-for="asset in result"
             :key="asset.id"
           >{{asset.name}}: {{ getCommaNumber(asset.dstAdjust) }}円の購入を行ってください</div>
         </div>
@@ -41,19 +41,13 @@
             <div>
               <div>リバランス前</div>
               <div class="chart-container">
-                <MyChart
-                  :labels="mergedResult.map(_=> `${_.name}: ${getCommaNumber(_.srcAmount)}`)"
-                  :data="mergedResult.map(_=>_.srcAmount)"
-                />
+                <MyChart :labels="result.map(_=> _.name)" :data="result.map(_=>_.srcAmount)"/>
               </div>
             </div>
             <div>
               <div>リバランス後</div>
               <div class="chart-container">
-                <MyChart
-                  :labels="mergedResult.map(_=> `${_.name}: ${getCommaNumber(_.dstAmount)}`)"
-                  :data="mergedResult.map(_=>_.dstAmount)"
-                />
+                <MyChart :labels="result.map(_=> _.name)" :data="result.map(_=>_.dstAmount)"/>
               </div>
             </div>
           </div>
@@ -73,30 +67,30 @@
                 <th class="has-text-centered">金額
                   <br>（後）
                 </th>
-                <th class="has-text-centered">乖離
+                <th class="has-text-centered">乖離率
                   <br>（前）
                 </th>
-                <th class="has-text-centered">乖離
+                <th class="has-text-centered">乖離率
                   <br>（後）
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="res in mergedResult" :key="res.key">
+              <tr v-for="res in result" :key="res.key">
                 <td>{{res.name}}</td>
                 <td class="has-text-centered">{{res.targetRate}}%</td>
                 <td class="has-text-right">{{getCommaNumber(res.dstAdjust)}}</td>
                 <td class="has-text-right">{{getCommaNumber(res.srcAmount)}}</td>
                 <td class="has-text-right">{{getCommaNumber(res.dstAmount)}}</td>
-                <td class="has-text-right">{{getFormatedPercentage(1-res.srcDeviation)}}%</td>
-                <td class="has-text-right">{{getFormatedPercentage(1-res.dstDeviation)}}%</td>
+                <td class="has-text-right">{{getFormatedPercentage(res.srcDeviation-1)}}%</td>
+                <td class="has-text-right">{{getFormatedPercentage(res.dstDeviation-1)}}%</td>
               </tr>
             </tbody>
           </table>
         </div>
       </template>
       <!-- loading -->
-      <template v-if="!(mergedResult.length > 0)">
+      <template v-if="!(result.length > 0)">
         <div class="my-container spinner">
           <Spinner background="#d84f00"/>
           <span>Loading...</span>
@@ -121,27 +115,17 @@ export default {
     Divider,
     MyChart,
   },
-  async mounted() {
-    const portfolio = await db.doc(`portfolios/${this.$route.params.id}`).get();
-    this.portfolio = portfolio.data();
-
-    const payload = {
-      assets: this.assets,
-      adjust: +this.$route.query.adjust,
-      mode: this.$route.query.rebalanceType,
-    };
-    const result = await this.$axios.$post(
-      'https://us-central1-rebalancer-218123.cloudfunctions.net/rebalance',
-      payload
-    );
-    this.calcResult = result;
+  mounted() {
+    // user came here with navigation.
+    // portfolio data is already fetched.
+    if (this.portfolio) this.getResults();
   },
   computed: {
-    total() {
-      return this.assets.reduce((acc, next) => acc + next.amount, 0);
+    portfolio() {
+      return this.$store.getters.portfolioById(this.$route.params.id);
     },
     assets() {
-      if (!this.portfolio.assetClasses) return [];
+      if (!this.portfolio) return [];
       return this.portfolio.assetClasses.map(_ => {
         return {
           id: _.id,
@@ -150,9 +134,31 @@ export default {
         };
       });
     },
-    mergedResult() {
-      if (!this.calcResult) return [];
-      return this.calcResult.map(_ => {
+    total() {
+      return this.assets.reduce((acc, next) => acc + next.amount, 0);
+    },
+  },
+  methods: {
+    getCommaNumber(num) {
+      return getCommaNumber(num);
+    },
+    getFormatedPercentage(num) {
+      return getFormatedPercentage(num);
+    },
+    async getResults() {
+      // if the portfolio is not loaded yet
+
+      const payload = {
+        assets: this.assets,
+        adjust: +this.$route.query.adjust,
+        mode: this.$route.query.rebalanceType,
+      };
+      const result = await this.$axios.$post(
+        'https://us-central1-rebalancer-218123.cloudfunctions.net/rebalance',
+        payload
+      );
+
+      this.result = result.map(_ => {
         const originalData = this.portfolio.assetClasses.find(
           ac => ac.id === _.id
         );
@@ -163,19 +169,17 @@ export default {
       });
     },
   },
-  methods: {
-    getCommaNumber(num) {
-      return getCommaNumber(num);
-    },
-    getFormatedPercentage(num) {
-      return getFormatedPercentage(num);
-    },
-  },
   data() {
     return {
-      portfolio: {},
-      calcResult: [],
+      result: [],
     };
+  },
+  watch: {
+    async portfolio(data) {
+      // fetch result when the this page is full reloaded.
+      // (detect the vuex store data changes)
+      this.getResults();
+    },
   },
 };
 </script>
