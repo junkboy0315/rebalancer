@@ -1,19 +1,19 @@
-type Asset = {
-  id: string; //uuid
+type Portfolio = {
+  id: string; // id of firestore
   name: string;
-  amount: number;
+  owner: string; // firebase user id
+  assetClasses: AssetClass[];
 };
 
 type AssetClass = {
-  id: string; // uuid
+  id: string; // generated uuid
   name: string;
   targetRate: number;
   assets: Asset[];
 };
 
-type Portfolio = {
-  id: string; // uuid
+type Asset = {
+  id: string; // generated uuid
   name: string;
-  owner: string; // firebase user id
-  assetClasses: AssetClass[];
+  amount: number;
 };
