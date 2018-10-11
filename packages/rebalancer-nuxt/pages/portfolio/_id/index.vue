@@ -2,7 +2,16 @@
   <section class="portfolio">
     <div class="top-line">
       <h1>Portfolio > Portfolio1</h1>
-      <nuxt-link :to="this.$route.params.id + '/rebalance'" class="button is-primary">リバランスを実行する</nuxt-link>
+      <nuxt-link
+        :to="this.$route.params.id + '/rebalance'"
+        :disabled="hasErrors"
+        class="button is-primary"
+      >リバランスを実行する</nuxt-link>
+    </div>
+    <div v-if="errors.length > 0" class="notification is-warning">
+      <ul>
+        <li v-for="error in errors" :key="error">- {{error}}</li>
+      </ul>
     </div>
     <template v-if="portfolio">
       <AssetClassCard
@@ -39,6 +48,26 @@ export default {
   computed: {
     portfolio() {
       return this.$store.getters.portfolioById(this.$route.params.id);
+    },
+    hasErrors() {
+      return this.errors.length > 0;
+    },
+    errors() {
+      const errors = [];
+      if (this.portfolio) {
+        const totalTargetRate = this.portfolio.assetClasses.reduce(
+          (acc, next) => acc + next.targetRate,
+          0
+        );
+        const hasMinusTargetRate = this.portfolio.assetClasses.find(
+          _ => _.targetRate < 0
+        );
+        if (totalTargetRate !== 100)
+          errors.push('目標割合の合計が100%になるように調整してください。');
+        if (hasMinusTargetRate)
+          errors.push('目標割合をマイナスに設定することはできません');
+      }
+      return errors;
     },
   },
   methods: {
