@@ -107,10 +107,15 @@ export default {
         const hasMinusTargetRate = this.portfolio.assetClasses.find(
           _ => _.targetRate < 0
         );
+        const hasExcessiveTargetRate = this.portfolio.assetClasses.find(
+          _ => _.targetRate > 100
+        );
         if (totalTargetRate !== 100)
-          errors.push('目標割合の合計が100%になるように調整してください。');
+          errors.push('目標割合の総合計が100%になるように調整してください。');
         if (hasMinusTargetRate)
           errors.push('目標割合をマイナスに設定することはできません');
+        if (hasExcessiveTargetRate)
+          errors.push('目標割合を100%以上に設定することはできません');
       }
       return errors;
     },

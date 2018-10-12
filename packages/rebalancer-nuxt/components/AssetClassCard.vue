@@ -22,7 +22,7 @@
         <input
           @change="onTargetRateChange(assetClass.id, $event)"
           class="input"
-          :class="{'is-danger': assetClass.targetRate < 0}"
+          :class="{'is-danger': assetClass.targetRate < 0 || assetClass.targetRate > 100}"
           type="number"
           :value="assetClass.targetRate"
           placeholder="Text input"
