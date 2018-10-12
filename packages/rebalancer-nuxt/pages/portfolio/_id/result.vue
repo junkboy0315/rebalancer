@@ -66,12 +66,11 @@
             <thead>
               <tr>
                 <th>Asset Class</th>
-                <th>Target</th>
+                <th class="has-text-centered">金額
+                  <br>（前）
+                </th>
                 <th>調整額</th>
                 <th class="has-text-centered">金額
-                  <br>（前）
-                </th>
-                <th class="has-text-centered">金額
                   <br>（後）
                 </th>
                 <th class="has-text-centered">比率
@@ -79,6 +78,9 @@
                 </th>
                 <th class="has-text-centered">比率
                   <br>（後）
+                </th>
+                <th class="has-text-centered">比率
+                  <br>（目標）
                 </th>
                 <th class="has-text-centered">乖離率
                   <br>（前）
@@ -91,12 +93,12 @@
             <tbody>
               <tr v-for="res in result" :key="res.key">
                 <td>{{res.name}}</td>
-                <td class="has-text-centered">{{res.targetRate}}%</td>
-                <td class="has-text-right">{{getCommaNumber(res.dstAdjust)}}</td>
                 <td class="has-text-right">{{getCommaNumber(res.srcAmount)}}</td>
+                <td class="has-text-right">{{getCommaNumber(res.dstAdjust)}}</td>
                 <td class="has-text-right">{{getCommaNumber(res.dstAmount)}}</td>
                 <td class="has-text-right">{{getFormatedPercentage(res.srcCurrentRate)}}%</td>
                 <td class="has-text-right">{{getFormatedPercentage(res.dstCurrentRate)}}%</td>
+                <td class="has-text-right">{{getFormatedPercentage(res.targetRate/100)}}%</td>
                 <td class="has-text-right">{{getFormatedPercentage(res.srcDeviation-1)}}%</td>
                 <td class="has-text-right">{{getFormatedPercentage(res.dstDeviation-1)}}%</td>
               </tr>

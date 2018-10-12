@@ -3,5 +3,6 @@ export const getCommaNumber = number => {
 };
 
 export const getFormatedPercentage = floatNumber => {
-  return Math.floor(floatNumber * 1000) / 10;
+  const val = Math.round(floatNumber * 1000) / 10;
+  return val.toFixed(1);
 };
