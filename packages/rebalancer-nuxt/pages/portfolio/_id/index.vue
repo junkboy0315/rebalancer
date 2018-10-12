@@ -239,6 +239,8 @@ export default {
         });
     },
     async onPortfolioDelete(portfolioId) {
+      if (!window.confirm('このポートフォリオを削除してよろしいですか？'))
+        return;
       await db
         .collection('portfolios')
         .doc(portfolioId)

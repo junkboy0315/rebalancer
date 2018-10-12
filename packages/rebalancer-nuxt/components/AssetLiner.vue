@@ -23,7 +23,7 @@
         >円
       </div>
       <div class="level-right">
-        <a @click="onDelete(asset.id)" class="level-item">
+        <a @click="_onDelete(asset.id)" class="level-item">
           <div class="icon">
             <i class="fas fa-trash"></i>
           </div>
@@ -63,6 +63,10 @@ export default {
       this.isEditMode = false;
       this.$refs.assetNameInput.blur();
       this.onNameChange(assetId, event);
+    },
+    _onDelete(assetId) {
+      if (window.confirm('このアセットを削除してよろしいですか？'))
+        this.onDelete(assetId);
     },
   },
 };

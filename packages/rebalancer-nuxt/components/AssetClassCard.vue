@@ -32,7 +32,7 @@
         <label>評価額:</label>
         {{ totalAmount }}円
       </div>
-      <div class="level-item icon" @click="onAssetClassDelete(assetClass.id)">
+      <div class="level-item icon" @click="_onAssetClassDelete(assetClass.id)">
         <i class="fas fa-trash"></i>
       </div>
     </div>
@@ -120,6 +120,10 @@ export default {
       this.isTitleEditMode = false;
       this.$refs.titleInput.blur();
       this.onAssetClassNameChange(that.assetClass.id, event);
+    },
+    _onAssetClassDelete(assetClassId) {
+      if (window.confirm('このアセットクラスを削除してよろしいですか？'))
+        this.onAssetClassDelete(assetClassId);
     },
   },
 };
