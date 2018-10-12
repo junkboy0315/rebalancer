@@ -17,13 +17,11 @@ const db = firebase.firestore();
 
 export default {
   components: { Navbar },
-  async mounted() {
+  mounted() {
     // when firebase auth is ready
     firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        // User is signed in. (including anonymous user)
-      } else {
-        // No user is signed in.
+      if (!user) {
+        // User is 'not signed-in' and 'not anonymous'
         await firebase.auth().signInAnonymously();
       }
 

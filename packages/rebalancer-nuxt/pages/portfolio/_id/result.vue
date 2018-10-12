@@ -112,6 +112,7 @@
         </div>
       </template>
     </div>
+    <SignupRecommender/>
     <nuxt-link to="./rebalance" class="button is-primary">リバランスを再試算する</nuxt-link>
   </section>
 </template>
@@ -119,6 +120,7 @@
 <script>
 import Spinner from '~/components/Spinner';
 import Divider from '~/components/Divider';
+import SignupRecommender from '~/components/SignupRecommender';
 import firebase from '~/assets/js/firebase';
 import MyChart from '~/components/MyChart';
 import { getCommaNumber, getFormatedPercentage } from '~/utils';
@@ -130,6 +132,7 @@ export default {
     Spinner,
     Divider,
     MyChart,
+    SignupRecommender,
   },
   mounted() {
     // user came here with navigation.
