@@ -13,6 +13,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+.card {
+  margin-bottom: 28px;
+}
 .my-container {
   color: #d84f00;
   padding: 12px;

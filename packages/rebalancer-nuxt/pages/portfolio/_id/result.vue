@@ -14,7 +14,6 @@
           </li>
         </ul>
       </nav>
-      <nuxt-link to="./rebalance" class="button is-primary">リバランスを再試算する</nuxt-link>
     </div>
     <div class="card">
       <div class="my-container">
@@ -113,6 +112,7 @@
         </div>
       </template>
     </div>
+    <nuxt-link to="./rebalance" class="button is-primary">リバランスを再試算する</nuxt-link>
   </section>
 </template>
 
@@ -207,6 +207,9 @@ export default {
 
 <style lang="scss" scoped>
 .portfolio {
+  .card {
+    margin-bottom: 2rem;
+  }
   .top-line {
     display: flex;
     justify-content: space-between;

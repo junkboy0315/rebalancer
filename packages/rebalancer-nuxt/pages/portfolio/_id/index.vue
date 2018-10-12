@@ -11,17 +11,6 @@
           </li>
         </ul>
       </nav>
-      <nuxt-link
-        :to="this.$route.params.id + '/rebalance'"
-        :disabled="hasErrors"
-        class="button is-primary"
-      >リバランスを実行する</nuxt-link>
-    </div>
-    <!-- errors -->
-    <div v-if="errors.length > 0" class="notification is-warning">
-      <ul>
-        <li v-for="error in errors" :key="error">- {{error}}</li>
-      </ul>
     </div>
     <!-- portfolio summary -->
     <h2>ポートフォリオ概要</h2>
@@ -61,6 +50,18 @@
       />
     </template>
     <AssetClassCardNew @click="addAssetClass"/>
+    <!-- errors -->
+    <div v-if="errors.length > 0" class="notification is-warning">
+      <ul>
+        <li v-for="error in errors" :key="error">- {{error}}</li>
+      </ul>
+    </div>
+    <!-- rebalance button -->
+    <nuxt-link
+      :to="this.$route.params.id + '/rebalance'"
+      :disabled="hasErrors"
+      class="button is-primary"
+    >リバランスを実行する</nuxt-link>
   </section>
 </template>
 
