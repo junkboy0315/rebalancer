@@ -1,0 +1,5 @@
+## deploy
+
+```bash
+firebase deploy
+```
