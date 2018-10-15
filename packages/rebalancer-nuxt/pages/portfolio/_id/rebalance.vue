@@ -35,10 +35,7 @@
         </div>
       </div>
       <div class="liner">
-        <nuxt-link
-          :to="`/portfolio/${this.$route.params.id}/result?rebalanceType=${this.rebalanceType}&adjust=${this.adjust}`"
-          class="button is-primary"
-        >リバランスを実行する</nuxt-link>
+        <button @click="doRebalance" class="button is-primary">リバランスを実行する</button>
       </div>
     </div>
   </section>
@@ -55,6 +52,15 @@ export default {
   computed: {
     portfolio() {
       return this.$store.getters.portfolioById(this.$route.params.id);
+    },
+  },
+  methods: {
+    doRebalance() {
+      this.$router.push(
+        `/portfolio/${this.$route.params.id}/result?rebalanceType=${
+          this.rebalanceType
+        }&adjust=${this.adjust}`
+      );
     },
   },
 };

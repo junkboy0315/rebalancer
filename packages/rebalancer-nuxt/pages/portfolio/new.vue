@@ -7,7 +7,7 @@
         <input class="input" v-model="portfolioName" type="text" placeholder="Text input">
       </div>
       <div class="liner">
-        <nuxt-link to="/portfolio" @click.native="createPortfolio" class="button is-primary">作成する</nuxt-link>
+        <button @click="createPortfolio" class="button is-primary">作成する</button>
       </div>
     </div>
   </div>
@@ -32,6 +32,7 @@ export default {
         name: this.portfolioName,
         assetClasses: [],
       });
+      this.$router.push('/portfolio');
     },
   },
 };
