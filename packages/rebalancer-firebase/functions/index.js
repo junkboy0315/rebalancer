@@ -20,40 +20,45 @@ exports.cleanupUserData = functions.auth.user().onDelete(user => {
     .catch(err => console.log('cleanup  (partially) failed', err));
 });
 
-exports.cleanupAnonymousAccounts = functions.https.onRequest((req, res) => {
-  if (req.method !== 'POST') return res.sendStatus(404);
+exports.cleanupAnonymousAccounts = functions.https.onRequest(
+  async (req, res) => {
+    if (req.method !== 'POST') return res.sendStatus(404);
 
-  function deleteAnonymousUsers(nextPageToken) {
-    firebaseAdmin
-      .auth()
-      .listUsers(500, nextPageToken)
-      .then(listUsersResult => {
-        console.log('listUsersResult:', listUsersResult);
-        listUsersResult.users.forEach(function(userRecord) {
-          if (userRecord.providerData.length === 0) {
-            //this user is anonymous
-            console.log('deleting:', userRecord); // do your delete here
-            firebaseAdmin
-              .auth()
-              .deleteUser(userRecord.uid)
-              .then(() => {
-                console.log('Successfully deleted user');
-              })
-              .catch(error => {
-                console.log('Error deleting user:', error);
-              });
-          }
+    const deleteAnonymousUsers = async nextPageToken => {
+      const userList = await firebaseAdmin
+        .auth()
+        .listUsers(500, nextPageToken)
+        .catch(err => {
+          console.log('Error listing users:', err);
+          throw Error(err);
         });
-        console.log('pageToken:', listUsersResult.pageToken);
-        if (listUsersResult.pageToken) {
-          deleteAnonymousUsers(listUsersResult.pageToken);
-        }
-      })
-      .catch(function(error) {
-        console.log('Error listing users:', error);
-      });
-  }
 
-  deleteAnonymousUsers();
-  res.sendStatus(200);
-});
+      console.log('listUsersResult:', userList);
+
+      for (user of userList.users) {
+        if (user.providerData.length === 0) {
+          //this user is anonymous
+          console.log('deleting:', user); // do your delete here
+          await firebaseAdmin
+            .auth()
+            .deleteUser(user.uid)
+            .catch(error => {
+              console.log('Error deleting user:', error);
+            });
+
+          console.log('Successfully deleted user');
+        }
+      }
+
+      console.log('pageToken:', userList.pageToken);
+
+      if (userList.pageToken) {
+        await deleteAnonymousUsers(userList.pageToken);
+      }
+    };
+
+    await deleteAnonymousUsers();
+
+    res.sendStatus(200);
+  }
+);
