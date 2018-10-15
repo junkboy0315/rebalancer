@@ -1,0 +1,6 @@
+# ses: https://www.netlify.com/docs/netlify-toml-reference/
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
