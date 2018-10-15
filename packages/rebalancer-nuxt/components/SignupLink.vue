@@ -20,7 +20,7 @@ export default {
 
         gapi.auth2.getAuthInstance().signIn({
           ux_mode: 'redirect',
-          redirect_uri: 'http://localhost:3000/auth/redirect-receiver/',
+          redirect_uri: `${window.location.origin}/auth/redirect-receiver/`,
         });
       });
     },
