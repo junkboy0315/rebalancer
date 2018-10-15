@@ -51,6 +51,7 @@ export default {
     },
     async deleteAccount() {
       try {
+        if (!confirm('本当にこのアカウントを削除してよろしいですか？')) return;
         await firebase.auth().currentUser.delete();
         alert('アカウントを削除しました');
         this.$router.push('/');
