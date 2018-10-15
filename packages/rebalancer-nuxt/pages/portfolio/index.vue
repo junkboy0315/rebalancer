@@ -2,7 +2,11 @@
   <section class="portfolio">
     <h1>Portfolio</h1>
     <div class="portfolio-grid">
-      <PortfolioCard v-for="portfolio in portfolios" :key="portfolio.id" :portfolio="portfolio"/>
+      <PortfolioCard
+        v-for="portfolio in portfoliosSorted"
+        :key="portfolio.id"
+        :portfolio="portfolio"
+      />
       <nuxt-link to="/portfolio/new" class="card add-portfolio">
         <div class="card-content">
           <div class="">
@@ -25,6 +29,10 @@ export default {
   components: { PortfolioCard },
   computed: {
     ...mapState(['portfolios']),
+    portfoliosSorted() {
+      if (!this.portfolios) return [];
+      return this.portfolios.sort((a, b) => a.name > b.name);
+    },
   },
 };
 </script>

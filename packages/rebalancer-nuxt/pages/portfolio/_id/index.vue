@@ -36,7 +36,7 @@
     <h2>アセットクラス</h2>
     <template v-if="portfolio">
       <AssetClassCard
-        v-for="assetClass in portfolio.assetClasses"
+        v-for="assetClass in sortedAssetClasses"
         :key="assetClass.id"
         :assetClass="assetClass"
         :onAssetClassDelete="deleteAssetClass"
@@ -82,6 +82,9 @@ export default {
   computed: {
     portfolio() {
       return this.$store.getters.portfolioById(this.$route.params.id);
+    },
+    sortedAssetClasses() {
+      return this.portfolio.assetClasses.sort((a, b) => a.name > b.name);
     },
     total() {
       if (!this.portfolio) return 0;

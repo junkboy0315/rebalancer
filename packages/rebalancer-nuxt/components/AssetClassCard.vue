@@ -37,7 +37,7 @@
       </div>
     </div>
     <Divider color="#525252"/>
-    <template v-for="asset in assetClass.assets">
+    <template v-for="asset in sortedAssets">
       <AssetLiner
         :asset="asset"
         :onDelete="(assetId)=>onAssetDelete(assetClass.id, assetId)"
@@ -112,6 +112,9 @@ export default {
         0
       );
       return getCommaNumber(amount);
+    },
+    sortedAssets() {
+      return this.assetClass.assets.sort((a, b) => a.name > b.name);
     },
   },
   methods: {
