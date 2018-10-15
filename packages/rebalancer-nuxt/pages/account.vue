@@ -50,18 +50,17 @@ export default {
       this.$router.push('/');
     },
     async deleteAccount() {
-      await firebase
-        .auth()
-        .currentUser.delete()
-        .catch(err => {
-          if (err.code === 'auth/requires-recent-login') {
-            alert(
-              'アカウントの削除を行うには再認証が必要です。一度サインアウトした後にもう一度サインインして、同じ操作を行ってください。'
-            );
-          }
-        });
-      alert('アカウントを削除しました');
-      this.$router.push('/');
+      try {
+        await firebase.auth().currentUser.delete();
+        alert('アカウントを削除しました');
+        this.$router.push('/');
+      } catch (err) {
+        if (err.code === 'auth/requires-recent-login')
+          return alert(
+            'アカウントの削除を行うには再認証が必要です。一度サインアウトした後にもう一度サインインして、同じ操作を行ってください。'
+          );
+        throw Error(err);
+      }
     },
   },
   data() {
