@@ -40,7 +40,15 @@ module.exports = {
   /*
   ** Nuxt.js modules
   */
-  modules: ['@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/axios', // Simple usage
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-116967778-7',
+      },
+    ],
+  ],
   /*
   ** for yarn workspace
   */
