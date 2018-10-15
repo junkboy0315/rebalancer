@@ -15,17 +15,6 @@ service cloud.firestore {
       }
 
       allow read, write: if isOwner() || isValidNewPortfolio();
-
-      // subcollections用のファンクション
-      // 親ドキュメントのデータを取得する
-      function parentDoc() {
-      	return get(/databases/$(database)/documents/portfolios/$(portfolioId)).data;
-      }
-
-			// 親ドキュメントのオーナーであれば読み書きを許可
-      match /assetClasses/{assetClassId} {
-      	allow read, write: if parentDoc().owner == request.auth.uid;
-      }
     }
   }
 }
