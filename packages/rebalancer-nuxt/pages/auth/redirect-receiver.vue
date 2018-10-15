@@ -15,7 +15,7 @@ export default {
   mounted() {
     var credential = firebase.auth.GoogleAuthProvider.credential(this.idToken);
 
-    firebase.auth().onAuthStateChanged(async user => {
+    this.unsubscribe = firebase.auth().onAuthStateChanged(async user => {
       if (user && user.isAnonymous) {
         // Upgrade anonymous account
         const usercred = await firebase
@@ -40,6 +40,9 @@ export default {
       }
       this.$router.push('/portfolio');
     });
+  },
+  beforeDestroy() {
+    this.unsubscribe();
   },
   computed: {
     // extract id_token from url hash

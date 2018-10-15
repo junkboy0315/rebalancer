@@ -1,6 +1,6 @@
 <template>
   <div v-if="isAnonymous" class="notification is-warning">
-    <span>あなたは現在「匿名ユーザ」のため、入力したデータは失われる可能性があります。データを保存しておきたい場合は
+    <span>あなたは現在「匿名ユーザ」のため、入力したデータは一定期間後に削除されます。データを保存しておきたい場合は
       <SignupLink text="Googleアカウントでログイン"/>してください。
     </span>
   </div>
@@ -15,11 +15,16 @@ export default {
     SignupLink,
   },
   mounted() {
-    this.isAnonymous = firebase.auth().currentUser.isAnonymous;
+    this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      this.isAnonymous = user.isAnonymous;
+    });
+  },
+  beforeDestroy() {
+    this.unsubscribe();
   },
   data() {
     return {
-      isAnonymous: false,
+      isAnonymous: true,
     };
   },
 };

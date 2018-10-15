@@ -8,12 +8,20 @@
         </span>
       </h2>
       <nuxt-link to="portfolio" class="button is-primary">使ってみる</nuxt-link>
+      <div class="login">
+        <SignupLink text="またはログインする"></SignupLink>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
+import SignupLink from '~/components/SignupLink';
+
 export default {
+  components: {
+    SignupLink,
+  },
   layout: 'home',
 };
 </script>
@@ -51,6 +59,11 @@ export default {
     font-size: 1.25rem;
     height: 54px;
     width: 280px;
+    margin-bottom: 1rem;
+  }
+
+  .login {
+    color: white;
   }
 }
 </style>
