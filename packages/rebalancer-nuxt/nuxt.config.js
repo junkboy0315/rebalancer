@@ -48,6 +48,7 @@ module.exports = {
         id: 'UA-116967778-7',
       },
     ],
+    '@nuxtjs/markdownit',
   ],
   /*
   ** for yarn workspace

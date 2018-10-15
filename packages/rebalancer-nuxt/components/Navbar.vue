@@ -24,6 +24,7 @@
           <!-- menu items -->
           <nuxt-link @click.native="closeHumberger" to="/portfolio" class="navbar-item">Portfolio</nuxt-link>
           <nuxt-link @click.native="closeHumberger" to="/account" class="navbar-item">Account</nuxt-link>
+          <nuxt-link @click.native="closeHumberger" to="/about" class="navbar-item">About</nuxt-link>
         </div>
       </div>
     </div>
