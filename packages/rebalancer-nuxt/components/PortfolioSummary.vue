@@ -1,16 +1,16 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="portfolio">
     <div class="card-content">
       <div class="level">
         <div class="level-left">
           <div>名称：</div>
+          <div v-if="!isTitleEditMode" @click="isTitleEditMode = true">{{portfolio.name}}</div>
           <input
-            @focus="isTitleEditMode = true"
+            v-if="isTitleEditMode"
             @blur="isTitleEditMode = false"
             @change="onPortfolioTitleChange($event.target.value)"
-            :class="{'is-static': !isTitleEditMode}"
             :style="{width:'20rem'}"
-            :value="portfolio && portfolio.name"
+            :value="portfolio.name"
             class="input"
           >
         </div>
@@ -35,7 +35,7 @@ import firebase from '~/assets/js/firebase';
 const db = firebase.firestore();
 
 export default {
-  props: { portfolio: { type: Object, required: true } },
+  props: { portfolio: { type: Object } },
   data() {
     return {
       isTitleEditMode: false,

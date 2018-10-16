@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="my-container">
+    <div class="card-content">
       <div @click="$emit('click')" class="add-assetclass">
         <i class="fas fa-plus"></i>アセットクラスを追加する
       </div>
@@ -15,11 +15,12 @@ export default {};
 <style lang="scss" scoped>
 .card {
   margin-bottom: 28px;
+  background: transparent;
+  box-shadow: none;
+  border: 1px dotted #525252;
 }
-.my-container {
+.card-content {
   color: #d84f00;
-  padding: 12px;
-  padding-left: 3rem;
   min-height: 58px;
   align-items: center;
   display: flex;

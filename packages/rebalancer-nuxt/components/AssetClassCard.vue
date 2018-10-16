@@ -2,51 +2,57 @@
   <div class="card">
     <!-- top line -->
     <div class="level first-line">
-      <div class="level-item asset-class-name">
-        <div class="icon">
-          <i class="fas fa-caret-square-right"></i>
+      <div class="level-left">
+        <div class="level-item asset-class-name">
+          <div class="icon">
+            <i class="fas fa-caret-square-right"></i>
+          </div>
+          <input
+            :value="assetClass.name"
+            class="input"
+            :class="{'is-static': !isTitleEditMode}"
+            :style="{'text-decoration': isTitleEditMode ? 'none':'underline' }"
+            ref="titleInput"
+            @click="isTitleEditMode = true"
+            @change="_onAssetClassNameChange($event)"
+            @blur="isTitleEditMode = false"
+          >
         </div>
-        <input
-          :value="assetClass.name"
-          class="input"
-          :class="{'is-static': !isTitleEditMode}"
-          :style="{'text-decoration': isTitleEditMode ? 'none':'underline' }"
-          ref="titleInput"
-          @click="isTitleEditMode = true"
-          @change="_onAssetClassNameChange($event)"
-          @blur="isTitleEditMode = false"
-        >
+        <div class="level-item target-rate">
+          <label>目標割合:</label>
+          <input
+            @change="onTargetRateChange(assetClass.id, $event)"
+            class="input"
+            :class="{'is-danger': assetClass.targetRate < 0 || assetClass.targetRate > 100}"
+            type="number"
+            :value="assetClass.targetRate"
+            placeholder="Text input"
+          >%
+        </div>
+        <div class="level-item current-total">
+          <label>評価額:</label>
+          {{ totalAmount }}円
+        </div>
       </div>
-      <div class="level-item target-rate">
-        <label>目標割合:</label>
-        <input
-          @change="onTargetRateChange(assetClass.id, $event)"
-          class="input"
-          :class="{'is-danger': assetClass.targetRate < 0 || assetClass.targetRate > 100}"
-          type="number"
-          :value="assetClass.targetRate"
-          placeholder="Text input"
-        >%
-      </div>
-      <div class="level-item current-total">
-        <label>評価額:</label>
-        {{ totalAmount }}円
-      </div>
-      <div class="level-item icon" @click="_onAssetClassDelete(assetClass.id)">
-        <i class="fas fa-trash"></i>
+      <div class="level-right">
+        <div class="icon" @click="_onAssetClassDelete(assetClass.id)">
+          <i class="fas fa-trash"></i>
+        </div>
       </div>
     </div>
-    <Divider color="#525252"/>
-    <template v-for="asset in sortedAssets">
-      <AssetLiner
-        :asset="asset"
-        :onDelete="(assetId)=>onAssetDelete(assetClass.id, assetId)"
-        :onNameChange="(assetId, event)=>onAssetNameChange(assetClass.id, assetId, event)"
-        :onAmountChange="(assetId, event)=>onAssetAmountChange(assetClass.id, assetId, event)"
-        :key="asset.id+'-liner'"
-      />
-      <Divider color="#ebeef5" :key="asset.id+'divider'"/>
-    </template>
+    <Divider color="#ebeef5"/>
+    <transition-group class="assets-container">
+      <template v-for="asset in sortedAssets">
+        <AssetLiner
+          :asset="asset"
+          :onDelete="(assetId)=>onAssetDelete(assetClass.id, assetId)"
+          :onNameChange="(assetId, event)=>onAssetNameChange(assetClass.id, assetId, event)"
+          :onAmountChange="(assetId, event)=>onAssetAmountChange(assetClass.id, assetId, event)"
+          :key="asset.id+'-liner'"
+        />
+        <Divider color="#ebeef5" :key="asset.id+'divider'"/>
+      </template>
+    </transition-group>
     <AssetLinerNew @click="onAddAsset(assetClass.id)"/>
   </div>
 </template>
@@ -155,6 +161,28 @@ export default {
     .target-rate input {
       width: 5rem;
       text-align: center;
+    }
+
+    .level-right .icon {
+      color: #ebeef5;
+      :hover {
+        color: #525252;
+      }
+    }
+  }
+
+  .assets-container {
+    .v-enter {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    .v-leave-to {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    .v-enter-active,
+    .v-leave-active {
+      transition: all 0.2s;
     }
   }
 }

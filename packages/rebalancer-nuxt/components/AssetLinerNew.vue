@@ -13,9 +13,8 @@ export default {};
 <style lang="scss" scoped>
 .my-container {
   color: #d84f00;
-  padding: 12px;
-  padding-left: 3rem;
-  min-height: 58px;
+  padding: 2px 24px;
+  min-height: 40px;
   align-items: center;
   display: flex;
 

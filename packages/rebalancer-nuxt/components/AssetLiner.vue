@@ -1,5 +1,5 @@
 <template>
-  <div class="level is-marginless is-mobile">
+  <div class="level is-marginless">
     <div class="level-left">
       <div class="level-item">
         <input
@@ -7,7 +7,7 @@
           @click="isEditMode = true"
           @change="_onNameChange(asset.id, $event)"
           @blur="isEditMode = false"
-          class="input level-item"
+          class="input level-item asset-name"
           :class="{'is-static': !isEditMode}"
           ref="assetNameInput"
           placeholder=""
@@ -17,18 +17,18 @@
         <input
           :value="asset.amount"
           @change="onAmountChange(asset.id, $event)"
-          class="input level-item"
+          class="input level-item asset-amount"
           type="number"
           placeholder="Text input"
         >円
       </div>
-      <div class="level-right">
-        <a @click="_onDelete(asset.id)" class="level-item">
-          <div class="icon">
-            <i class="fas fa-trash"></i>
-          </div>
-        </a>
-      </div>
+    </div>
+    <div class="level-right">
+      <a @click="_onDelete(asset.id)" class="level-item">
+        <div class="icon">
+          <i class="fas fa-trash"></i>
+        </div>
+      </a>
     </div>
   </div>
 </template>
@@ -74,12 +74,18 @@ export default {
 
 <style lang="scss" scoped>
 .level {
-  padding: 12px;
-  padding-left: 3rem;
+  padding: 2px 24px;
 }
-input {
+.asset-name {
+}
+.asset-amount {
   width: 10rem;
-  vertical-align: baseline;
   text-align: center;
+}
+.icon {
+  color: #ebeef5;
+  :hover {
+    color: #525252;
+  }
 }
 </style>

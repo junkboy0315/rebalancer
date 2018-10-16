@@ -109,7 +109,12 @@ export default {
         .update({
           assetClasses: [
             ...this.portfolio.assetClasses,
-            { id: uuid(), name: 'domestic!', assets: [], targetRate: 0 },
+            {
+              id: uuid(),
+              name: '新しいアセットクラス',
+              assets: [],
+              targetRate: 0,
+            },
           ],
         });
     },
@@ -139,7 +144,7 @@ export default {
     async addAsset(id) {
       const newAsset = {
         id: uuid(),
-        name: 'new asset',
+        name: '新しいアセット',
         amount: 0,
       };
       await db

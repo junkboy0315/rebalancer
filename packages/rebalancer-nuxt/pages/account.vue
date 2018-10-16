@@ -12,15 +12,14 @@
           {{ email ? email : 'なし' }}
         </div>
         <SignupRecommender/>
-        <template v-if="!isAnonymous">
-          <div class="line">
-            <button @click="signOut" class="button">サインアウトする</button>
-          </div>
-          <div class="line">
-            <button @click="deleteAccount" class="button is-danger">アカウントを削除する</button>
-          </div>
-        </template>
       </div>
+      <template v-if="!isAnonymous">
+        <Divider/>
+        <div class="card-content is-flex">
+          <button @click="signOut" class="button">サインアウトする</button>
+          <button @click="deleteAccount" class="button is-danger">アカウントを削除する</button>
+        </div>
+      </template>
     </div>
   </section>
 </template>
@@ -28,10 +27,12 @@
 <script>
 import firebase from '~/assets/js/firebase';
 import SignupRecommender from '~/components/SignupRecommender';
+import Divider from '~/components/Divider';
 
 export default {
   components: {
     SignupRecommender,
+    Divider,
   },
   mounted() {
     this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
@@ -82,6 +83,14 @@ export default {
   margin-bottom: 1rem;
   &:last-child {
     margin-bottom: 0;
+  }
+}
+
+.is-flex {
+  flex-wrap: wrap;
+  margin: -6px;
+  > * {
+    margin: 6px;
   }
 }
 </style>
