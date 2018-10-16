@@ -27,10 +27,7 @@
         <!-- 試算結果 -->
         <div class="my-container">
           <div class="has-text-weight-bold">試算結果</div>
-          <div
-            v-for="asset in result"
-            :key="asset.id"
-          >{{asset.name}}: {{ getCommaNumber(asset.dstAdjust) }}円の購入を行ってください</div>
+          <RebalanceResultSummary :result="result"/>
         </div>
         <Divider/>
         <!-- リバランス前後のポートフォリオ -->
@@ -123,6 +120,7 @@
 import Spinner from '~/components/Spinner';
 import Divider from '~/components/Divider';
 import SignupRecommender from '~/components/SignupRecommender';
+import RebalanceResultSummary from '~/components/RebalanceResultSummary';
 import firebase from '~/assets/js/firebase';
 import MyChart from '~/components/MyChart';
 import { getCommaNumber, getFormatedPercentage } from '~/utils';
@@ -135,6 +133,7 @@ export default {
     Divider,
     MyChart,
     SignupRecommender,
+    RebalanceResultSummary,
   },
   mounted() {
     // user came here with navigation.
