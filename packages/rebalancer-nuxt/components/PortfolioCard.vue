@@ -37,7 +37,7 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  min-height: 244px;
+  min-height: 164px;
   padding-right: 1.5rem;
   &:hover {
     cursor: pointer;
