@@ -7,27 +7,20 @@
           <div class="icon">
             <i class="fas fa-caret-square-right"></i>
           </div>
-          <input
+          <BaseInput
             :value="assetClass.name"
-            class="input"
-            :class="{'is-static': !isTitleEditMode}"
-            :style="{'text-decoration': isTitleEditMode ? 'none':'underline' }"
-            ref="titleInput"
-            @click="isTitleEditMode = true"
-            @change="_onAssetClassNameChange($event)"
-            @blur="isTitleEditMode = false"
-          >
+            @change="onAssetClassNameChange(assetClass.id, $event)"
+            :textStyle="{fontWeight: 'bold'}"
+          />
         </div>
         <div class="level-item target-rate">
           <label>目標割合:</label>
-          <input
-            @change="onTargetRateChange(assetClass.id, $event)"
-            class="input"
-            :class="{'is-danger': assetClass.targetRate < 0 || assetClass.targetRate > 100}"
-            type="number"
+          <BaseInput
             :value="assetClass.targetRate"
-            placeholder="Text input"
-          >%
+            type="number"
+            @change="onTargetRateChange(assetClass.id, $event)"
+            :inputStyle="{width: '5rem'}"
+          />％
         </div>
         <div class="level-item current-total">
           <label>評価額:</label>
@@ -40,7 +33,7 @@
         </div>
       </div>
     </div>
-    <Divider color="#ebeef5"/>
+    <Divider color="#525252"/>
     <transition-group class="assets-container">
       <template v-for="asset in sortedAssets">
         <AssetLiner
@@ -63,6 +56,7 @@ import AssetLiner from './AssetLiner';
 import AssetLinerNew from './AssetLinerNew';
 import firebase from '~/assets/js/firebase';
 import { getCommaNumber } from '~/utils';
+import BaseInput from '~/components/base/BaseInput';
 
 const db = firebase.firestore();
 
@@ -105,11 +99,7 @@ export default {
     Divider,
     AssetLiner,
     AssetLinerNew,
-  },
-  data() {
-    return {
-      isTitleEditMode: false,
-    };
+    BaseInput,
   },
   computed: {
     totalAmount() {
@@ -124,12 +114,6 @@ export default {
     },
   },
   methods: {
-    _onAssetClassNameChange() {
-      const that = this;
-      this.isTitleEditMode = false;
-      this.$refs.titleInput.blur();
-      this.onAssetClassNameChange(that.assetClass.id, event);
-    },
     _onAssetClassDelete(assetClassId) {
       if (window.confirm('このアセットクラスを削除してよろしいですか？'))
         this.onAssetClassDelete(assetClassId);

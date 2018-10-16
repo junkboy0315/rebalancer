@@ -126,7 +126,7 @@ export default {
           assetClasses: this.portfolio.assetClasses.filter(_ => _.id !== id),
         });
     },
-    async changeTargetRate(id, e) {
+    async changeTargetRate(id, rate) {
       await db
         .collection('portfolios')
         .doc(this.$route.params.id)
@@ -136,7 +136,7 @@ export default {
 
             return {
               ..._,
-              targetRate: Math.floor(Number(e.target.value)),
+              targetRate: Math.floor(Number(rate)),
             };
           }),
         });
@@ -175,7 +175,7 @@ export default {
           }),
         });
     },
-    async onAssetClassNameChange(assetClassId, event) {
+    async onAssetClassNameChange(assetClassId, name) {
       await db
         .collection('portfolios')
         .doc(this.$route.params.id)
@@ -184,12 +184,12 @@ export default {
             if (_.id !== assetClassId) return _;
             return {
               ..._,
-              name: event.target.value,
+              name,
             };
           }),
         });
     },
-    async onAssetNameChange(assetClassId, assetId, event) {
+    async onAssetNameChange(assetClassId, assetId, name) {
       await db
         .collection('portfolios')
         .doc(this.$route.params.id)
@@ -202,14 +202,14 @@ export default {
                 if (asset.id !== assetId) return asset;
                 return {
                   ...asset,
-                  name: event.target.value,
+                  name,
                 };
               }),
             };
           }),
         });
     },
-    async onAssetAmountChange(assetClassId, assetId, event) {
+    async onAssetAmountChange(assetClassId, assetId, amount) {
       await db
         .collection('portfolios')
         .doc(this.$route.params.id)
@@ -222,7 +222,7 @@ export default {
                 if (asset.id !== assetId) return asset;
                 return {
                   ...asset,
-                  amount: Math.floor(Number(event.target.value)),
+                  amount: Math.floor(Number(amount)),
                 };
               }),
             };

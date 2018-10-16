@@ -1,0 +1,58 @@
+<template>
+  <div>
+    <template v-if="!isEditMode">
+      <div @click="onEditStart" class="text-holder" :style="textStyle">{{value}}</div>
+    </template>
+    <input
+      v-bind="$attrs"
+      v-if="isEditMode"
+      :value="value"
+      @change="onChange($event.target.value)"
+      @keyup.enter="onEditEnd"
+      @keyup.esc="onEditEnd"
+      @blur="onEditEnd"
+      ref="myInput"
+      class="input my-input"
+      :style="inputStyle"
+    >
+  </div>
+</template>
+
+<script>
+import Vue from 'vue';
+
+export default {
+  inheritAttrs: false,
+  props: ['value', 'textStyle', 'inputStyle'],
+  data() {
+    return {
+      isEditMode: false,
+    };
+  },
+  methods: {
+    onEditStart() {
+      this.isEditMode = true;
+      // wait until the input element is rendered
+      Vue.nextTick(() => {
+        this.$refs.myInput.focus();
+      });
+    },
+    onEditEnd() {
+      this.isEditMode = false;
+    },
+    onChange(text) {
+      this.$emit('change', text);
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.text-holder {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+.my-input {
+  text-align: center;
+}
+</style>

@@ -2,25 +2,15 @@
   <div class="level is-marginless">
     <div class="level-left">
       <div class="level-item">
-        <input
-          :value="asset.name"
-          @click="isEditMode = true"
-          @change="_onNameChange(asset.id, $event)"
-          @blur="isEditMode = false"
-          class="input level-item asset-name"
-          :class="{'is-static': !isEditMode}"
-          ref="assetNameInput"
-          placeholder=""
-        >
+        <BaseInput :value="asset.name" @change="onNameChange(asset.id, $event)"/>
       </div>
       <div class="level-item">
-        <input
+        <BaseInput
           :value="asset.amount"
           @change="onAmountChange(asset.id, $event)"
-          class="input level-item asset-amount"
+          :inputStyle="{width: '10rem'}"
           type="number"
-          placeholder="Text input"
-        >円
+        />円
       </div>
     </div>
     <div class="level-right">
@@ -34,7 +24,12 @@
 </template>
 
 <script>
+import BaseInput from '~/components/base/BaseInput';
+
 export default {
+  components: {
+    BaseInput,
+  },
   props: {
     asset: {
       type: Object,
@@ -59,11 +54,6 @@ export default {
     };
   },
   methods: {
-    _onNameChange(assetId, event) {
-      this.isEditMode = false;
-      this.$refs.assetNameInput.blur();
-      this.onNameChange(assetId, event);
-    },
     _onDelete(assetId) {
       if (window.confirm('このアセットを削除してよろしいですか？'))
         this.onDelete(assetId);
@@ -75,6 +65,7 @@ export default {
 <style lang="scss" scoped>
 .level {
   padding: 2px 24px;
+  min-height: 40px;
 }
 .asset-name {
 }

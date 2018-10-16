@@ -4,15 +4,7 @@
       <div class="level">
         <div class="level-left">
           <div>名称：</div>
-          <div v-if="!isTitleEditMode" @click="isTitleEditMode = true">{{portfolio.name}}</div>
-          <input
-            v-if="isTitleEditMode"
-            @blur="isTitleEditMode = false"
-            @change="onPortfolioTitleChange($event.target.value)"
-            :style="{width:'20rem'}"
-            :value="portfolio.name"
-            class="input"
-          >
+          <BaseInput :value="portfolio.name" @change="onPortfolioTitleChange"/>
         </div>
       </div>
       <div class="level">
@@ -29,18 +21,17 @@
 </template>
 
 <script>
+import BaseInput from '~/components/base/BaseInput';
 import { getCommaNumber } from '~/utils';
 import firebase from '~/assets/js/firebase';
 
 const db = firebase.firestore();
 
 export default {
-  props: { portfolio: { type: Object } },
-  data() {
-    return {
-      isTitleEditMode: false,
-    };
+  components: {
+    BaseInput,
   },
+  props: { portfolio: { type: Object } },
   computed: {
     total() {
       if (!this.portfolio) return 0;
