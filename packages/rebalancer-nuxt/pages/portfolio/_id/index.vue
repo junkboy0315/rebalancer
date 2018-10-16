@@ -34,7 +34,7 @@
     </div>
     <!-- asset classes -->
     <h2>アセットクラス</h2>
-    <template v-if="portfolio">
+    <transition-group tag="div" class="asset-classes-container">
       <AssetClassCard
         v-for="assetClass in sortedAssetClasses"
         :key="assetClass.id"
@@ -48,7 +48,7 @@
         :onAssetAmountChange="onAssetAmountChange"
         class="asset-class-card"
       />
-    </template>
+    </transition-group>
     <AssetClassCardNew @click="addAssetClass"/>
     <!-- errors -->
     <div v-if="errors.length > 0" class="notification is-warning">
@@ -84,6 +84,7 @@ export default {
       return this.$store.getters.portfolioById(this.$route.params.id);
     },
     sortedAssetClasses() {
+      if (!this.portfolio) return [];
       return this.portfolio.assetClasses.sort((a, b) => a.name > b.name);
     },
     total() {
@@ -297,6 +298,21 @@ export default {
 
   .asset-class-card {
     margin-bottom: 28px;
+  }
+
+  .asset-classes-container {
+    .v-enter {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    .v-leave-to {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    .v-enter-active,
+    .v-leave-active {
+      transition: all 0.2s;
+    }
   }
 }
 </style>
