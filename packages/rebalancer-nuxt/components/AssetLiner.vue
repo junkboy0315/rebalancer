@@ -67,8 +67,6 @@ export default {
   padding: 2px 24px;
   min-height: 40px;
 }
-.asset-name {
-}
 .asset-amount {
   width: 10rem;
   text-align: center;
