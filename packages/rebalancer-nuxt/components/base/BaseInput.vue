@@ -1,7 +1,11 @@
 <template>
   <div>
     <template v-if="!isEditMode">
-      <div @click="onEditStart" class="text-holder" :style="textStyle">{{value}}</div>
+      <div
+        @click="onEditStart"
+        class="text-holder"
+        :style="[{padding:'2px 8px'}, textStyle]"
+      >{{value}}</div>
     </template>
     <input
       v-bind="$attrs"
