@@ -58,7 +58,6 @@ export default {
     .navbar-item {
       color: #ff8e4d;
       font-size: 1.5rem;
-      padding-bottom: 5px; // adjust vertical align
       &:hover {
         color: #ff8e4d;
       }
