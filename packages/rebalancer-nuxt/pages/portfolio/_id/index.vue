@@ -13,25 +13,8 @@
       </nav>
     </div>
     <!-- portfolio summary -->
-    <h2>ポートフォリオ概要</h2>
-    <div class="card">
-      <div class="card-content">
-        <div class="level">
-          <div class="level-left">
-            <div>名称：</div>
-            <input
-              @change="onPortfolioTitleChange($event.target.value)"
-              :class="{'is-static': !isEditModeOfPortfolioTitle}"
-              class="input"
-              :style="{width:'20rem'}"
-              :value="portfolio && portfolio.name"
-            >
-          </div>
-        </div>
-        <div>評価額：{{total}}円</div>
-        <button @click="onPortfolioDelete(portfolio.id)" class="button is-danger">ポートフォリオを削除</button>
-      </div>
-    </div>
+    <h2>ポートフォリオの概要</h2>
+    <PortfolioSummary :portfolio="portfolio"/>
     <!-- asset classes -->
     <h2>アセットクラス</h2>
     <transition-group tag="div" class="asset-classes-container">
@@ -51,7 +34,7 @@
     </transition-group>
     <AssetClassCardNew @click="addAssetClass"/>
     <!-- errors -->
-    <div v-if="errors.length > 0" class="notification is-warning">
+    <div v-if="errors.length > 0 && sortedAssetClasses.length > 0" class="notification is-warning">
       <ul>
         <li v-for="error in errors" :key="error">- {{error}}</li>
       </ul>
@@ -69,6 +52,7 @@
 import uuid from 'uuid/v4';
 import AssetClassCard from '~/components/AssetClassCard';
 import AssetClassCardNew from '~/components/AssetClassCardNew';
+import PortfolioSummary from '~/components/PortfolioSummary';
 import firebase from '~/assets/js/firebase';
 import { getCommaNumber } from '~/utils';
 
@@ -78,6 +62,7 @@ export default {
   components: {
     AssetClassCard,
     AssetClassCardNew,
+    PortfolioSummary,
   },
   computed: {
     portfolio() {
@@ -86,14 +71,6 @@ export default {
     sortedAssetClasses() {
       if (!this.portfolio) return [];
       return this.portfolio.assetClasses.sort((a, b) => a.name > b.name);
-    },
-    total() {
-      if (!this.portfolio) return 0;
-      const totalsOfEachAssetClass = this.portfolio.assetClasses.map(_ =>
-        _.assets.reduce((acc, next) => acc + next.amount, 0)
-      );
-      const total = totalsOfEachAssetClass.reduce((acc, next) => acc + next, 0);
-      return getCommaNumber(total);
     },
     numberOfAssetClass() {
       return this.portfolio.assetClasses.length;
@@ -247,29 +224,6 @@ export default {
           }),
         });
     },
-    async onPortfolioDelete(portfolioId) {
-      if (!window.confirm('このポートフォリオを削除してよろしいですか？'))
-        return;
-      await db
-        .collection('portfolios')
-        .doc(portfolioId)
-        .delete();
-
-      this.$router.push('/portfolio');
-    },
-    async onPortfolioTitleChange(name) {
-      await db
-        .collection('portfolios')
-        .doc(this.portfolio.id)
-        .update({
-          name,
-        });
-    },
-  },
-  data() {
-    return {
-      isEditModeOfPortfolioTitle: false,
-    };
   },
 };
 </script>
