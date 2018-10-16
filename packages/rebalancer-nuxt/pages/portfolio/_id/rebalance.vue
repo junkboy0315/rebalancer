@@ -56,6 +56,8 @@ export default {
   },
   methods: {
     doRebalance() {
+      if (this.adjust === 0 && this.rebalanceType === 'nosell')
+        return alert('ノーセルリバランスを行うには金額を入力してください。');
       this.$router.push(
         `/portfolio/${this.$route.params.id}/result?rebalanceType=${
           this.rebalanceType
