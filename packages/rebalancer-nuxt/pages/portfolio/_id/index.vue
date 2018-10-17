@@ -40,11 +40,11 @@
       </ul>
     </div>
     <!-- rebalance button -->
-    <nuxt-link
-      :to="this.$route.params.id + '/rebalance'"
+    <button
       :disabled="hasErrors"
+      @click="onRebalance"
       class="button is-primary"
-    >Estimate Rebalancing</nuxt-link>
+    >Estimate Rebalancing</button>
   </section>
 </template>
 
@@ -102,6 +102,9 @@ export default {
     },
   },
   methods: {
+    onRebalance() {
+      this.$router.push(this.$route.params.id + '/rebalance');
+    },
     async addAssetClass() {
       await db
         .collection('portfolios')
