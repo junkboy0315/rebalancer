@@ -10,6 +10,10 @@ $navbar-item-color: #fff;
 $navbar-item-hover-color: #fff;
 $navbar-item-hover-background-color: #666;
 
+// disable bigger breakpoint
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
 @import 'bulma';
 
 html {
