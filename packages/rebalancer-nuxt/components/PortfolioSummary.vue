@@ -3,7 +3,7 @@
     <div class="card-content">
       <div class="level">
         <div class="level-left">
-          <div>名称：</div>
+          <div>ポートフォリオ名：</div>
           <BaseInput :value="portfolio.name" @change="onPortfolioTitleChange"/>
         </div>
       </div>

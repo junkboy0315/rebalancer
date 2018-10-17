@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <template v-if="!isEditMode">
       <div
         @click="onEditStart"
@@ -19,7 +19,7 @@
       class="input my-input"
       :style="inputStyle"
     >
-  </div>
+  </span>
 </template>
 
 <script>
@@ -55,6 +55,7 @@ export default {
 .text-holder {
   cursor: pointer;
   background: #f0f0f0;
+  display: inline;
 }
 .my-input {
   text-align: center;

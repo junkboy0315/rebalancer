@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <!-- top line -->
-    <div class="level first-line">
+    <div class="level card-content is-mobile first-line">
       <div class="level-left">
         <div class="level-item asset-class-name">
           <div class="icon">
@@ -13,19 +13,6 @@
             :textStyle="{fontWeight: 'bold'}"
           />
         </div>
-        <div class="level-item target-rate">
-          <label>目標割合:</label>
-          <BaseInput
-            :value="assetClass.targetRate"
-            type="number"
-            @change="onTargetRateChange(assetClass.id, $event)"
-            :inputStyle="{width: '5rem'}"
-          />％
-        </div>
-        <div class="level-item current-total">
-          <label>評価額:</label>
-          {{ totalAmount }}円
-        </div>
       </div>
       <div class="level-right">
         <div class="icon" @click="_onAssetClassDelete(assetClass.id)">
@@ -33,20 +20,63 @@
         </div>
       </div>
     </div>
-    <Divider color="#525252"/>
-    <transition-group class="assets-container">
-      <template v-for="asset in sortedAssets">
-        <AssetLiner
-          :asset="asset"
-          :onDelete="(assetId)=>onAssetDelete(assetClass.id, assetId)"
-          :onNameChange="(assetId, event)=>onAssetNameChange(assetClass.id, assetId, event)"
-          :onAmountChange="(assetId, event)=>onAssetAmountChange(assetClass.id, assetId, event)"
-          :key="asset.id+'-liner'"
-        />
-        <Divider color="#ebeef5" :key="asset.id+'divider'"/>
-      </template>
-    </transition-group>
-    <AssetLinerNew @click="onAddAsset(assetClass.id)"/>
+    <Divider color="#EBEEF5"/>
+    <div class="card-content">
+      <div>
+        <label>- 目標割合:</label>
+        <BaseInput
+          :value="assetClass.targetRate"
+          type="number"
+          @change="onTargetRateChange(assetClass.id, $event)"
+          :inputStyle="{width: '5rem'}"
+        />％
+      </div>
+      <div>
+        <label>- 評価額:</label>
+        {{ totalAmount }}円
+      </div>
+    </div>
+    <Divider color="#EBEEF5"/>
+    <div class="card-content table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>アセット名</th>
+            <th class="has-text-centered">金額</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="asset in sortedAssets" :key="asset.id">
+            <td>
+              <BaseInput
+                :value="asset.name"
+                @change="onAssetNameChange(assetClass.id, asset.id, $event)"
+              />
+            </td>
+            <td class="has-text-right">
+              <BaseInput
+                :value="asset.amount"
+                @change="onAssetAmountChange(assetClass.id, asset.id, $event)"
+                :inputStyle="{width: '10rem'}"
+                type="number"
+              />
+              <span>円</span>
+            </td>
+            <td>
+              <div @click="_onAssetDelete(assetClass.id, asset.id)" class="icon">
+                <i class="fas fa-trash"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <AssetLinerNew @click="onAddAsset(assetClass.id)"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -118,6 +148,13 @@ export default {
       if (window.confirm('このアセットクラスを削除してよろしいですか？'))
         this.onAssetClassDelete(assetClassId);
     },
+    _onAssetDelete(assetClassId, assetId) {
+      if (window.confirm('このアセットを削除してよろしいですか？'))
+        this.onAssetDelete(assetClassId, assetId);
+    },
+    getCommaNumber(_) {
+      return getCommaNumber(_);
+    },
   },
 };
 </script>
@@ -125,12 +162,9 @@ export default {
 <style lang="scss" scoped>
 .card {
   .first-line {
-    padding: 24px;
     margin-bottom: 0;
 
     .asset-class-name {
-      justify-content: left;
-
       .icon {
         color: #d84f00;
         font-size: 2rem;
@@ -142,15 +176,11 @@ export default {
       }
     }
 
-    .target-rate input {
-      width: 5rem;
-      text-align: center;
-    }
-
     .level-right .icon {
       color: #ebeef5;
       :hover {
         color: #525252;
+        cursor: pointer;
       }
     }
   }
@@ -167,6 +197,18 @@ export default {
     .v-enter-active,
     .v-leave-active {
       transition: all 0.2s;
+    }
+  }
+}
+
+.table-container {
+  white-space: nowrap;
+
+  .icon {
+    color: #ebeef5;
+    :hover {
+      color: #525252;
+      cursor: pointer;
     }
   }
 }
