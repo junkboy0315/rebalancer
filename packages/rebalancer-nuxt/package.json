@@ -1,7 +1,7 @@
 {
   "name": "rebalancer-nuxt",
   "version": "1.0.0",
-  "description": "My amazing Nuxt.js project",
+  "description": "Portfolio rebalancing tool for investing in stocks, funds and cryptocurrencies.",
   "author": "Shota Tamura",
   "private": true,
   "scripts": {
