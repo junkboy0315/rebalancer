@@ -17,21 +17,28 @@
     </div>
     <div class="card">
       <div class="my-container">
-        <div class="has-text-weight-bold">Rebalance Summary</div>
-        <div>Amount to Add (or Sell): {{ getCommaNumber(this.$route.query.adjust) }}</div>
-        <div>Rebalance Type: {{ rebalanceModeName }}</div>
+        <h1 class="has-text-weight-bold">Rebalance Summary</h1>
+        <div>
+          <span class="my-label">Amount to Add (or Sell):</span>
+          {{ getCommaNumber(this.$route.query.adjust) }}
+        </div>
+        <div>
+          <span class="my-label">Rebalance Type:</span>
+          {{ rebalanceModeName }}
+        </div>
       </div>
       <Divider/>
       <!-- result -->
       <template v-if="result.length > 0">
         <!-- 試算結果 -->
         <div class="my-container">
-          <div class="has-text-weight-bold">Results</div>
+          <h1 class="has-text-weight-bold">Results</h1>
           <RebalanceResultSummary :result="result"/>
         </div>
         <Divider/>
         <!-- リバランス前後のポートフォリオ -->
         <div class="my-container">
+          <h1 class="has-text-weight-bold">Details</h1>
           <div class="is-flex">
             <div>
               <div class="has-text-weight-bold">Before</div>
@@ -58,7 +65,7 @@
         <Divider/>
         <!-- 表 -->
         <div class="my-container">
-          <table class="table">
+          <table class="table is-hoverable">
             <thead>
               <tr>
                 <th>Asset Class</th>
@@ -241,5 +248,10 @@ export default {
 
 .spinner span {
   margin-left: 1rem;
+}
+
+.my-label {
+  font-weight: bold;
+  margin-right: 0.5rem;
 }
 </style>

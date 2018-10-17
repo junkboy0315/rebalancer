@@ -15,9 +15,7 @@
         </div>
       </div>
       <div class="level-right">
-        <div class="icon" @click="_onAssetClassDelete(assetClass.id)">
-          <i class="fas fa-trash"></i>
-        </div>
+        <div @click="_onAssetClassDelete(assetClass.id)" class="delete"></div>
       </div>
     </div>
     <Divider color="#EBEEF5"/>
@@ -38,7 +36,7 @@
     </div>
     <Divider color="#EBEEF5"/>
     <div class="card-content table-container">
-      <table class="table">
+      <table class="table is-borderedd">
         <thead>
           <tr>
             <th>Asset</th>
@@ -63,9 +61,7 @@
               />
             </td>
             <td>
-              <div @click="_onAssetDelete(assetClass.id, asset.id)" class="icon">
-                <i class="fas fa-trash"></i>
-              </div>
+              <div @click="_onAssetDelete(assetClass.id, asset.id)" class="delete"></div>
             </td>
           </tr>
           <tr>
@@ -172,14 +168,6 @@ export default {
         font-weight: bold;
       }
     }
-
-    .level-right .icon {
-      color: #ebeef5;
-      :hover {
-        color: #525252;
-        cursor: pointer;
-      }
-    }
   }
 
   .assets-container {
@@ -200,13 +188,10 @@ export default {
 
 .table-container {
   white-space: nowrap;
+}
 
-  .icon {
-    color: #ebeef5;
-    :hover {
-      color: #525252;
-      cursor: pointer;
-    }
-  }
+label {
+  font-weight: bold;
+  margin-right: 0.5rem;
 }
 </style>

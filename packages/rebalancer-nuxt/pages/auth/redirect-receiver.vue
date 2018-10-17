@@ -1,6 +1,6 @@
 <template>
   <section>
-    <Spinner class="spinner" background="#d84f00"/>ログイン中...
+    <Spinner class="spinner" background="#d84f00"/>Logging in...
   </section>
 </template>
 

@@ -3,13 +3,13 @@
     <div class="card-content">
       <div class="level">
         <div class="level-left">
-          <div>Portfolio Name:</div>
+          <div class="my-label">Portfolio Name:</div>
           <BaseInput :value="portfolio.name" @change="onPortfolioTitleChange"/>
         </div>
       </div>
       <div class="level">
         <div class="level-left">
-          <div>Total:</div>
+          <div class="my-label">Total:</div>
           <div>{{total}}</div>
         </div>
         <div class="level-right">
@@ -70,5 +70,9 @@ export default {
 }
 .card {
   margin-bottom: 2rem;
+}
+.my-label {
+  font-weight: bold;
+  margin-right: 0.5rem;
 }
 </style>
