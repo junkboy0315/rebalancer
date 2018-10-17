@@ -9,7 +9,7 @@
         <iframe
           width="100%"
           height="250"
-          src="https://www.youtube.com/embed/0GWQ93O7mLY?rel=0&amp;showinfo=0"
+          src="https://www.youtube.com/embed/0GWQ93O7mLY?rel=0&amp;showinfo=0&amp;cc_load_policy=1"
           frameborder="0"
           allow="autoplay; encrypted-media"
           allowfullscreen
