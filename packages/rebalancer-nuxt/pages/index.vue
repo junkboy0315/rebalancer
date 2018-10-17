@@ -5,6 +5,16 @@
       <h2 class="subtitle has-text-white">
         <span>For Stocks, Funds and Cryptocurrencies</span>
       </h2>
+      <div class="iframe-container">
+        <iframe
+          width="100%"
+          height="250"
+          src="https://www.youtube.com/embed/0GWQ93O7mLY?rel=0&amp;showinfo=0"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
       <nuxt-link to="portfolio" class="button is-primary">Try now</nuxt-link>
       <div class="login">
         <SignupLink text="or Login"></SignupLink>
@@ -46,10 +56,14 @@ export default {
   }
 
   .subtitle {
-    margin-bottom: 56px;
+    margin-bottom: 36px;
     font-size: 1.5rem;
     text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14),
       0px 1px 5px rgba(0, 0, 0, 0.12);
+  }
+
+  .iframe-container {
+    margin-bottom: 36px;
   }
 
   .button {
