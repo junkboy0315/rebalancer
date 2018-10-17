@@ -23,7 +23,7 @@
     <Divider color="#EBEEF5"/>
     <div class="card-content">
       <div>
-        <label>- 目標割合:</label>
+        <label>- Target Rate:</label>
         <BaseInput
           :value="assetClass.targetRate"
           type="number"
@@ -32,8 +32,8 @@
         />％
       </div>
       <div>
-        <label>- 評価額:</label>
-        {{ totalAmount }}円
+        <label>- Subtotal:</label>
+        {{ totalAmount }}
       </div>
     </div>
     <Divider color="#EBEEF5"/>
@@ -41,8 +41,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th>アセット名</th>
-            <th class="has-text-centered">金額</th>
+            <th>Asset</th>
+            <th class="has-text-centered">Amount</th>
             <th></th>
           </tr>
         </thead>
@@ -61,7 +61,6 @@
                 :inputStyle="{width: '10rem'}"
                 type="number"
               />
-              <span>円</span>
             </td>
             <td>
               <div @click="_onAssetDelete(assetClass.id, asset.id)" class="icon">
@@ -71,7 +70,7 @@
           </tr>
           <tr>
             <td colspan="3">
-              <AssetLinerNew @click="onAddAsset(assetClass.id)"/>
+              <AddNewAsset @click="onAddAsset(assetClass.id)"/>
             </td>
           </tr>
         </tbody>
@@ -82,8 +81,7 @@
 
 <script>
 import Divider from './Divider';
-import AssetLiner from './AssetLiner';
-import AssetLinerNew from './AssetLinerNew';
+import AddNewAsset from './AddNewAsset';
 import firebase from '~/assets/js/firebase';
 import { getCommaNumber } from '~/utils';
 import BaseInput from '~/components/base/BaseInput';
@@ -127,8 +125,7 @@ export default {
   },
   components: {
     Divider,
-    AssetLiner,
-    AssetLinerNew,
+    AddNewAsset,
     BaseInput,
   },
   computed: {
@@ -145,11 +142,11 @@ export default {
   },
   methods: {
     _onAssetClassDelete(assetClassId) {
-      if (window.confirm('このアセットクラスを削除してよろしいですか？'))
+      if (window.confirm('Are you sure to delete this asset class?'))
         this.onAssetClassDelete(assetClassId);
     },
     _onAssetDelete(assetClassId, assetId) {
-      if (window.confirm('このアセットを削除してよろしいですか？'))
+      if (window.confirm('Are you sure to delete this asset?'))
         this.onAssetDelete(assetClassId, assetId);
     },
     getCommaNumber(_) {

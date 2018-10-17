@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-content">
       <div @click="$emit('click')" class="add-assetclass">
-        <i class="fas fa-plus"></i>アセットクラスを追加する
+        <i class="fas fa-plus"></i>Add Asset Class
       </div>
     </div>
   </div>

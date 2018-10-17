@@ -4,9 +4,10 @@
     <div class="card">
       <div class="card-content">
         <p>
-          このサイトは
-          <a href="https://www.yuuniworks.com">Yuuniworks</a>が作成したものです。
-          商談用に開発したサンプルのサービスではありますが、下記の利用規約の範囲内で自由にお使いいただけます。
+          This site was created by
+          <a href="https://www.yuuniworks.com">Yuuniworks</a>.
+          Although it is a sample service developed for business talks,
+          you can use it freely within the scope of the following terms of service.
         </p>
       </div>
       <Divider/>

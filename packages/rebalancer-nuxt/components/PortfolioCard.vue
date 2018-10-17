@@ -6,8 +6,8 @@
       </div>
       <div class="contents-column">
         <div class="portfolio-title">{{ portfolio.name }}</div>
-        <PortfolioCardLiner title="総額" :value="total + '円'"/>
-        <PortfolioCardLiner title="アセットクラス数" :value="numberOfAssetClass"/>
+        <PortfolioCardLiner title="Total" :value="total"/>
+        <PortfolioCardLiner title="Asset Classes" :value="numberOfAssetClass"/>
       </div>
     </div>
   </nuxt-link>

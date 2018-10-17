@@ -12,9 +12,7 @@
           <div class="">
             <i class="fas fa-plus"></i>
           </div>
-          <div class="">ポートフォリオを
-            <br>新規作成する
-          </div>
+          <div class="">Create New Portfolio</div>
         </div>
       </nuxt-link>
     </div>

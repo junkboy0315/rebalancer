@@ -17,25 +17,24 @@
     </div>
     <div class="card">
       <div class="my-container">
-        <div class="has-text-weight-bold">リバランスの概要</div>
-        <div>今回の投資額: {{ getCommaNumber(this.$route.query.adjust) }}円</div>
-        <div>リバランス方針: {{ rebalanceModeName }}</div>
+        <div class="has-text-weight-bold">Rebalance Summary</div>
+        <div>Amount to Add (or Sell): {{ getCommaNumber(this.$route.query.adjust) }}</div>
+        <div>Rebalance Type: {{ rebalanceModeName }}</div>
       </div>
       <Divider/>
       <!-- result -->
       <template v-if="result.length > 0">
         <!-- 試算結果 -->
         <div class="my-container">
-          <div class="has-text-weight-bold">試算結果</div>
+          <div class="has-text-weight-bold">Results</div>
           <RebalanceResultSummary :result="result"/>
         </div>
         <Divider/>
         <!-- リバランス前後のポートフォリオ -->
         <div class="my-container">
-          <div class="has-text-weight-bold">リバランス前後のポートフォリオ</div>
           <div class="is-flex">
             <div>
-              <div>リバランス前</div>
+              <div class="has-text-weight-bold">Before</div>
               <div class="chart-container">
                 <MyChart
                   :labels="result.map(_=> _.name)"
@@ -45,7 +44,7 @@
               </div>
             </div>
             <div>
-              <div>リバランス後</div>
+              <div class="has-text-weight-bold">After</div>
               <div class="chart-container">
                 <MyChart
                   :labels="result.map(_=> _.name)"
@@ -63,27 +62,27 @@
             <thead>
               <tr>
                 <th>Asset Class</th>
-                <th class="has-text-centered">金額
-                  <br>（前）
+                <th class="has-text-centered">Amount
+                  <br>(Before)
                 </th>
-                <th>調整額</th>
-                <th class="has-text-centered">金額
-                  <br>（後）
+                <th>Adjust</th>
+                <th class="has-text-centered">Amount
+                  <br>(After)
                 </th>
-                <th class="has-text-centered">比率
-                  <br>（前）
+                <th class="has-text-centered">Rate
+                  <br>(Before)
                 </th>
-                <th class="has-text-centered">比率
-                  <br>（後）
+                <th class="has-text-centered">Rate
+                  <br>(After)
                 </th>
-                <th class="has-text-centered">比率
-                  <br>（目標）
+                <th class="has-text-centered">Rate
+                  <br>(Target)
                 </th>
-                <th class="has-text-centered">乖離率
-                  <br>（前）
+                <th class="has-text-centered">Deviation
+                  <br>(Before)
                 </th>
-                <th class="has-text-centered">乖離率
-                  <br>（後）
+                <th class="has-text-centered">Deviation
+                  <br>(After)
                 </th>
               </tr>
             </thead>
@@ -112,7 +111,7 @@
       </template>
     </div>
     <SignupRecommender/>
-    <nuxt-link to="./rebalance" class="button is-primary">リバランスを再試算する</nuxt-link>
+    <nuxt-link to="./rebalance" class="button is-primary">Estimate Rebalancing Again</nuxt-link>
   </section>
 </template>
 
@@ -159,8 +158,8 @@ export default {
     },
     rebalanceModeName() {
       if (this.$route.query.rebalanceType === 'sell')
-        return 'セルリバランスモード';
-      else return 'ノーセルリバランスモード';
+        return 'Selling Rebalance';
+      else return 'No-selling Rebalance';
     },
   },
   methods: {

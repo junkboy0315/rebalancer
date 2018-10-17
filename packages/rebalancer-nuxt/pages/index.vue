@@ -3,13 +3,11 @@
     <div>
       <h1 class="title has-text-white">Portfolio Rebalancer</h1>
       <h2 class="subtitle has-text-white">
-        <span>面倒なリバランスの計算を楽に行うためのツールです。
-          <br>株式、投資信託、仮想通貨など、幅広くご利用いただけます。
-        </span>
+        <span>For Stocks, Funds and Cryptocurrencies</span>
       </h2>
-      <nuxt-link to="portfolio" class="button is-primary">使ってみる</nuxt-link>
+      <nuxt-link to="portfolio" class="button is-primary">Try now</nuxt-link>
       <div class="login">
-        <SignupLink text="またはログインする"></SignupLink>
+        <SignupLink text="or Login"></SignupLink>
       </div>
     </div>
   </section>
@@ -47,8 +45,8 @@ export default {
   }
 
   .subtitle {
-    line-height: 2rem;
     margin-bottom: 56px;
+    font-size: 1.5rem;
     text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14),
       0px 1px 5px rgba(0, 0, 0, 0.12);
   }

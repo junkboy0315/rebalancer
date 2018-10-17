@@ -1,7 +1,7 @@
 <template>
   <div class="my-container">
     <div @click="$emit('click')" class="add-asset">
-      <i class="fas fa-plus"></i>アセットを追加する
+      <i class="fas fa-plus"></i>Add Asset
     </div>
   </div>
 </template>

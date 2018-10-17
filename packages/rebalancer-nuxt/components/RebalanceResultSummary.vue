@@ -1,20 +1,19 @@
 <template>
   <div>
-    <div v-if="!isRebalanceNeeded">リバランスできません。</div>
-    <div v-for="assetClass in result" :key="assetClass.id">
-      <div v-if="assetClass.dstAdjust !== 0">
-        アセットクラス「
+    <div v-if="!isRebalanceNeeded">There is no need to rebalance.</div>
+    <ul>
+      <li v-for="assetClass in result" :key="assetClass.id" v-if="assetClass.dstAdjust !== 0">
+        <span
+          :class="isBuy(assetClass.dstAdjust) ? 'buy' : 'sell'"
+          class="adjust-amount"
+        >{{ isBuy(assetClass.dstAdjust) ? 'Buy':'Sell'}} {{ getCommaNumber(Math.abs(assetClass.dstAdjust)) }}</span>
+        on asset class
         <span
           :class="isBuy(assetClass.dstAdjust) ? 'buy' : 'sell'"
           class="asset-class-name"
         >{{assetClass.name}}</span>
-        」において、
-        <span
-          :class="isBuy(assetClass.dstAdjust) ? 'buy' : 'sell'"
-          class="adjust-amount"
-        >{{ getCommaNumber(Math.abs(assetClass.dstAdjust)) }}円の{{ isBuy(assetClass.dstAdjust) ? '購入':'売却'}}</span>を行ってください
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -52,5 +51,11 @@ export default {
 
 .adjust-amount {
   font-weight: bold;
+}
+ul {
+  padding-left: 1.5rem;
+}
+li {
+  list-style-type: disc;
 }
 </style>

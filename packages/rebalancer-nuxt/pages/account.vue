@@ -4,20 +4,20 @@
     <div class="card">
       <div class="card-content">
         <div class="line">
-          <span class="has-text-weight-bold my-label">アカウントの種類:</span>
-          {{ isAnonymous ? '匿名ユーザ' : 'Googleアカウントでの登録済みユーザ'}}
+          <span class="has-text-weight-bold my-label">Account Type:</span>
+          {{ isAnonymous ? 'Anonymous' : 'Google Account'}}
         </div>
         <div class="line">
-          <span class="has-text-weight-bold my-label">登録メールアドレス:</span>
-          {{ email ? email : 'なし' }}
+          <span class="has-text-weight-bold my-label">Registered Email:</span>
+          {{ email ? email : 'not available' }}
         </div>
         <SignupRecommender/>
       </div>
       <template v-if="!isAnonymous">
         <Divider/>
         <div class="card-content is-flex">
-          <button @click="signOut" class="button">サインアウトする</button>
-          <button @click="deleteAccount" class="button is-danger">アカウントを削除する</button>
+          <button @click="signOut" class="button">Sign Out</button>
+          <button @click="deleteAccount" class="button is-danger">Delete This Account</button>
         </div>
       </template>
     </div>
@@ -52,14 +52,14 @@ export default {
     },
     async deleteAccount() {
       try {
-        if (!confirm('本当にこのアカウントを削除してよろしいですか？')) return;
+        if (!confirm('Are you sure to delete this account?')) return;
         await firebase.auth().currentUser.delete();
-        alert('アカウントを削除しました');
+        alert('Deleted your acount.');
         this.$router.push('/');
       } catch (err) {
         if (err.code === 'auth/requires-recent-login')
           return alert(
-            'アカウントの削除を行うには再認証が必要です。一度サインアウトした後にもう一度サインインして、同じ操作を行ってください。'
+            'Re-authentication is required to delete account. Please sign out and sign in, and do the same operation again.'
           );
         throw Error(err);
       }

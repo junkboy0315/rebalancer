@@ -3,17 +3,17 @@
     <div class="card-content">
       <div class="level">
         <div class="level-left">
-          <div>ポートフォリオ名：</div>
+          <div>Portfolio Name:</div>
           <BaseInput :value="portfolio.name" @change="onPortfolioTitleChange"/>
         </div>
       </div>
       <div class="level">
         <div class="level-left">
-          <div>評価額：</div>
-          <div>{{total}}円</div>
+          <div>Total:</div>
+          <div>{{total}}</div>
         </div>
         <div class="level-right">
-          <a @click="onPortfolioDelete(portfolio.id)" class="is-danger">削除</a>
+          <a @click="onPortfolioDelete(portfolio.id)" class="is-danger">Delete this portfolio</a>
         </div>
       </div>
     </div>
@@ -44,8 +44,7 @@ export default {
   },
   methods: {
     async onPortfolioDelete(portfolioId) {
-      if (!window.confirm('このポートフォリオを削除してよろしいですか？'))
-        return;
+      if (!window.confirm('Are you sure to delete to this portfolio?')) return;
       await db
         .collection('portfolios')
         .doc(this.portfolio.id)

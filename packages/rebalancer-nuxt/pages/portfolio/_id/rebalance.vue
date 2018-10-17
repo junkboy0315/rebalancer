@@ -17,25 +17,25 @@
     </div>
     <div class="card">
       <div class="liner">
-        <div class="has-text-weight-bold">追加投資額（売却額）</div>
+        <div class="has-text-weight-bold">Amount to Add (or Sell)</div>
         <input v-model="adjust" class="input" type="number" placeholder="">
       </div>
       <div class="liner">
-        <div class="has-text-weight-bold">リバランスの種別</div>
+        <div class="has-text-weight-bold">Rebalance Type</div>
         <div>
           <label class="radio">
             <input type="radio" id="nosell" value="nosell" v-model="rebalanceType">
-            <span>ノーセルリバランス</span>
+            <span>No-selling Rebalance</span>
           </label>
           <br>
           <label class="radio">
             <input type="radio" id="sell" value="sell" v-model="rebalanceType">
-            <span>セルリバランス</span>
+            <span>Selling Rebalance</span>
           </label>
         </div>
       </div>
       <div class="liner">
-        <button @click="doRebalance" class="button is-primary">リバランスを実行する</button>
+        <button @click="doRebalance" class="button is-primary">Estimate Rebalancing</button>
       </div>
     </div>
   </section>
@@ -57,7 +57,7 @@ export default {
   methods: {
     doRebalance() {
       if (this.adjust === 0 && this.rebalanceType === 'nosell')
-        return alert('ノーセルリバランスを行うには金額を入力してください。');
+        return alert('Please enter the amount to do the no-selling rebalance.');
       this.$router.push(
         `/portfolio/${this.$route.params.id}/result?rebalanceType=${
           this.rebalanceType
@@ -100,7 +100,10 @@ export default {
       }
 
       & > *:first-child {
-        width: 12rem;
+        width: 14rem;
+      }
+      & > *:nth-child(2) {
+        width: 14rem;
       }
 
       @media (max-width: 768px) {

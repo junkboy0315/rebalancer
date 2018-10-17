@@ -3,11 +3,11 @@
     <h1>Portfolio</h1>
     <div class="card">
       <div class="liner">
-        <div class="my-title has-text-weight-bold">新しいポートフォリオの名前</div>
-        <input class="input" v-model="portfolioName" type="text" placeholder="Text input">
+        <div class="my-title has-text-weight-bold">New portfolio name</div>
+        <input class="input" v-model="portfolioName" type="text" placeholder="enter the name">
       </div>
       <div class="liner">
-        <button @click="createPortfolio" class="button is-primary">作成する</button>
+        <button @click="createPortfolio" class="button is-primary">Create</button>
       </div>
     </div>
   </div>

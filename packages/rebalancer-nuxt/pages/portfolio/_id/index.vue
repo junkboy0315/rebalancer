@@ -13,10 +13,10 @@
       </nav>
     </div>
     <!-- portfolio summary -->
-    <h2>ポートフォリオの概要</h2>
+    <h2>Portfolio Summary</h2>
     <PortfolioSummary :portfolio="portfolio"/>
     <!-- asset classes -->
-    <h2>アセットクラス</h2>
+    <h2>Asset Classes</h2>
     <transition-group tag="div" class="asset-classes-container">
       <AssetClassCard
         v-for="assetClass in sortedAssetClasses"
@@ -44,7 +44,7 @@
       :to="this.$route.params.id + '/rebalance'"
       :disabled="hasErrors"
       class="button is-primary"
-    >リバランスを実行する</nuxt-link>
+    >Estimate Rebalancing</nuxt-link>
   </section>
 </template>
 
@@ -92,11 +92,11 @@ export default {
           _ => _.targetRate > 100
         );
         if (totalTargetRate !== 100)
-          errors.push('目標割合の総合計が100%になるように調整してください。');
+          errors.push('The total target rate should be 100%.');
         if (hasMinusTargetRate)
-          errors.push('目標割合をマイナスに設定することはできません');
+          errors.push('Each target rate must be a positive value.');
         if (hasExcessiveTargetRate)
-          errors.push('目標割合を100%以上に設定することはできません');
+          errors.push('Each target rate can not exceed 100%.');
       }
       return errors;
     },
@@ -111,7 +111,7 @@ export default {
             ...this.portfolio.assetClasses,
             {
               id: uuid(),
-              name: '新しいアセットクラス',
+              name: 'My New Asset Class',
               assets: [],
               targetRate: 0,
             },
@@ -144,7 +144,7 @@ export default {
     async addAsset(id) {
       const newAsset = {
         id: uuid(),
-        name: '新しいアセット',
+        name: 'My New Asset',
         amount: 0,
       };
       await db

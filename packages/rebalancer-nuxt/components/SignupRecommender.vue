@@ -1,8 +1,9 @@
 <template>
   <div v-if="isAnonymous" class="notification is-warning">
-    <span>あなたは現在「匿名ユーザ」のため、入力したデータは毎日0時に削除されます。データを保存しておきたい場合は
-      <SignupLink text="Googleアカウントでログイン"/>してください。
-    </span>
+    <SignupLink text="Log in with your Google account now."/>
+    <p>
+      <br>Otherwise your data is deleted at 0 o'clock everyday.
+    </p>
   </div>
 </template>
 
