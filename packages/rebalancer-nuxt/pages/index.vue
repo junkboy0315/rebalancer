@@ -27,6 +27,7 @@ export default {
 <style lang="scss" scoped>
 .home {
   align-items: center;
+  // https://www.pexels.com/photo/aerial-architectural-design-architecture-buildings-373912/
   background: url('~assets/top-background.jpg') no-repeat center center;
   background-size: cover;
   display: flex;
