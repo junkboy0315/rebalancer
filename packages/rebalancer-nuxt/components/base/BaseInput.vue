@@ -5,7 +5,7 @@
         @click="onEditStart"
         class="text-holder"
         :style="[{padding:'2px 8px'}, textStyle]"
-      >{{value}}</div>
+      >{{computedValue}}</div>
     </template>
     <input
       v-bind="$attrs"
@@ -24,10 +24,18 @@
 
 <script>
 import Vue from 'vue';
+import { getCommaNumber } from '~/utils';
 
 export default {
   inheritAttrs: false,
   props: ['value', 'textStyle', 'inputStyle'],
+  computed: {
+    computedValue() {
+      return this.$attrs.type === 'number'
+        ? getCommaNumber(this.value)
+        : this.value;
+    },
+  },
   data() {
     return {
       isEditMode: false,
