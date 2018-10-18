@@ -5,15 +5,10 @@
       <h2 class="subtitle has-text-white">
         <span>For Stocks, Funds and Cryptocurrencies</span>
       </h2>
-      <div class="iframe-container">
-        <iframe
-          width="100%"
-          height="250"
+      <div class="youtube">
+        <ResponsiveIframe
           src="https://www.youtube.com/embed/0GWQ93O7mLY?rel=0&amp;showinfo=0&amp;cc_load_policy=1"
-          frameborder="0"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-        ></iframe>
+        />
       </div>
       <nuxt-link to="portfolio" class="button is-primary">Try now</nuxt-link>
       <div class="login">
@@ -25,10 +20,12 @@
 
 <script>
 import SignupLink from '~/components/SignupLink';
+import ResponsiveIframe from '~/components/base/ResponsiveIframe';
 
 export default {
   components: {
     SignupLink,
+    ResponsiveIframe,
   },
   layout: 'home',
 };
@@ -62,8 +59,9 @@ export default {
       0px 1px 5px rgba(0, 0, 0, 0.12);
   }
 
-  .iframe-container {
-    margin-bottom: 36px;
+  .youtube {
+    max-width: 500px;
+    margin: 0 auto 2rem;
   }
 
   .button {
