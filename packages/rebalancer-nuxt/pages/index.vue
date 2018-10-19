@@ -3,7 +3,7 @@
     <div>
       <h1 class="title has-text-white">Portfolio Rebalancer</h1>
       <h2 class="subtitle has-text-white">
-        <span>For Stocks, Funds and Cryptocurrencies</span>
+        <span>that increase portfolio returns and reduce risks.</span>
       </h2>
       <div class="youtube">
         <ResponsiveIframe
