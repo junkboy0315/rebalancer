@@ -10,7 +10,7 @@
           src="https://www.youtube.com/embed/0GWQ93O7mLY?rel=0&amp;showinfo=0&amp;cc_load_policy=1"
         />
       </div>
-      <nuxt-link to="portfolio" class="button is-primary">Try now</nuxt-link>
+      <nuxt-link to="/portfolio/try-now" class="button is-primary">Try now</nuxt-link>
       <div class="login">
         <SignupLink text="or Login"></SignupLink>
       </div>

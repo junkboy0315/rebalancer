@@ -12,6 +12,10 @@
         </ul>
       </nav>
     </div>
+    <div v-if="$route.query['sample-portfolio'] === 'true'" class="notification is-primary">
+      This is the sample portfolio for quickstart.
+      Edit this a bit and let's Rebalance!
+    </div>
     <!-- portfolio summary -->
     <h2>Portfolio Summary</h2>
     <PortfolioSummary :portfolio="portfolio"/>

@@ -24,13 +24,13 @@
         <div class="has-text-weight-bold">Rebalance Type</div>
         <div>
           <label class="radio">
-            <input type="radio" id="nosell" value="nosell" v-model="rebalanceType">
-            <span>No-selling Rebalance</span>
+            <input type="radio" id="sell" value="sell" v-model="rebalanceType">
+            <span>Selling Rebalance</span>
           </label>
           <br>
           <label class="radio">
-            <input type="radio" id="sell" value="sell" v-model="rebalanceType">
-            <span>Selling Rebalance</span>
+            <input type="radio" id="nosell" value="nosell" v-model="rebalanceType">
+            <span>No-selling Rebalance</span>
           </label>
         </div>
       </div>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       adjust: 0,
-      rebalanceType: 'nosell',
+      rebalanceType: 'sell',
     };
   },
   computed: {
