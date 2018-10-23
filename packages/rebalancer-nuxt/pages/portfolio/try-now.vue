@@ -74,7 +74,7 @@ export default {
           },
         ],
       });
-      this.$router.push(`/portfolio/${id}?sample-portfolio=true`);
+      this.$router.replace(`/portfolio/${id}?sample-portfolio=true`);
     },
   },
 };
