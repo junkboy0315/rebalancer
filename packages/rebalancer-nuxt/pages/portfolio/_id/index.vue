@@ -12,9 +12,9 @@
         </ul>
       </nav>
     </div>
-    <div v-if="$route.query['sample-portfolio'] === 'true'" class="notification is-primary">
+    <div v-if="$route.query['sample-portfolio'] === 'true'" class="notification is-warning">
       This is the sample portfolio for quickstart.
-      Edit this a bit and let's Rebalance!
+      Edit this as you like and press the 'Rebalance' button at the bottom !
     </div>
     <!-- portfolio summary -->
     <h2>Portfolio Summary</h2>
@@ -47,8 +47,8 @@
     <button
       :disabled="hasErrors"
       @click="onRebalance"
-      class="button is-primary"
-    >Estimate Rebalancing</button>
+      class="button is-primary is-fullwidth"
+    >Rebalance</button>
   </section>
 </template>
 

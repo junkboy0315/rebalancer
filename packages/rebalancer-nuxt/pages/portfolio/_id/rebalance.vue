@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="liner">
-        <button @click="doRebalance" class="button is-primary">Estimate Rebalancing</button>
+        <button @click="doRebalance" class="button is-primary">Rebalance</button>
       </div>
     </div>
   </section>
