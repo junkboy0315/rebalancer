@@ -15,7 +15,7 @@ export default {
   components: { Spinner },
   mounted() {
     firebase.auth().onAuthStateChanged(user => {
-      if (!user.isAnonymous) return this.$router.push('/portfolio');
+      if (!user.isAnonymous) return this.$router.replace('/portfolio');
       this.createSamplePortfolio();
     });
   },
