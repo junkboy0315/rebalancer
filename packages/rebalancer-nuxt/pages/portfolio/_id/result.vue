@@ -118,7 +118,7 @@
       </template>
     </div>
     <SignupRecommender/>
-    <nuxt-link to="./rebalance" class="button is-primary">Estimate Rebalancing Again</nuxt-link>
+    <nuxt-link to="./rebalance" class="button is-primary is-fullwidth">Rebalance Again</nuxt-link>
   </section>
 </template>
 
